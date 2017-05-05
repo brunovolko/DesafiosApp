@@ -6,4 +6,5 @@
     <color name="positivo">#5ed230</color>
     <color name="negativo">#ff0b0b</color>
     <color name="celeste">#48cde9</color>
+    <color name="white">#ffffff</color>
 </resources>

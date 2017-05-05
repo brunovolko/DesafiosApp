@@ -1,473 +1,483 @@
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-
-    <!-- Top nav -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/textlines"
-        android:layout_alignParentTop="true"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logotest"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="7dp"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/lupa"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            />
-    </RelativeLayout>
-
-    <!-- / Top nav -->
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical">
 
 
-    <!-- Publicaciones-->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        <!-- Top nav -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Primer publicacion de prueba -->
+            android:background="@drawable/textlines"
+            android:layout_alignParentTop="true"
+            android:id="@+id/topNavBar"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logotest"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lupa"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                />
+        </RelativeLayout>
+
+        <!-- / Top nav -->
+
+
+        <!-- Publicaciones-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:orientation="vertical">
+                <!-- Primer publicacion de prueba -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:paddingTop="15dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:src="@drawable/miniaturahometest1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="zuckerm"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="11dp"
+                            />
+                    </LinearLayout>
+
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:src="@drawable/miniaturahometest1"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="zuckerm"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="11dp"
+                        android:src="@drawable/imagenpublicaciontest1"
+                        android:scaleType="fitStart"
+                        android:layout_marginTop="15dp"
                         />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/imagenpublicaciontest1"
-                    android:scaleType="fitStart"
-                    android:layout_marginTop="15dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="-245dp"
-                    android:paddingLeft="15dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/positivoimage"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/negativoimage"
-                        android:layout_marginLeft="10dp"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/comentarimage"
-                        android:layout_marginLeft="10dp"/>
-                    <!-- Puntuacion -->
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp">
+                        android:orientation="horizontal"
+                        android:paddingRight="15dp"
+                        android:layout_marginTop="-245dp"
+                        android:paddingLeft="15dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/positivoimage"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/negativoimage"
+                            android:layout_marginLeft="10dp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/comentarimage"
+                            android:layout_marginLeft="10dp"/>
+                        <!-- Puntuacion -->
+
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
-                            <View
-                                android:layout_width="130dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectpositivo"
-                                android:layout_height="5dp"/>
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectnegativo"
-                                android:layout_height="5dp"/>
+                                <View
+                                    android:layout_width="130dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectpositivo"
+                                    android:layout_height="5dp"/>
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectnegativo"
+                                    android:layout_height="5dp"/>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="984"
+                                    android:textColor="@color/positivo"
+                                    android:textSize="24dp"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginLeft="5dp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="200"
+                                    android:textColor="@color/negativo"
+                                    android:textSize="15dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_marginTop="7dp"/>
+                            </RelativeLayout>
                         </LinearLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="984"
-                                android:textColor="@color/positivo"
-                                android:textSize="24dp"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginLeft="5dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="200"
-                                android:textColor="@color/negativo"
-                                android:textSize="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="7dp"
-                                android:layout_marginTop="7dp"/>
-                        </RelativeLayout>
+                        <!-- / Puntuacion -->
                     </LinearLayout>
-                    <!-- / Puntuacion -->
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/flag"
-                        android:layout_marginLeft="10dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sacate una foto codeando a lo campeon"
-                        android:layout_marginLeft="15dp"
-                        android:textSize="14dp"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ver 321 comentarios"
-                        android:textStyle="bold"
-                        android:textSize="14dp"
-                        android:layout_marginLeft="50dp"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <!-- / Publicacion -->
-
-            <!-- Primer publicacion de prueba -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-160dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:src="@drawable/miniaturahometest1"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="zuckerm"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="11dp"
-                        />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/imagenpublicaciontest1"
-                    android:scaleType="fitStart"
-                    android:layout_marginTop="15dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="-245dp"
-                    android:paddingLeft="15dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/positivoimage"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/negativoimage"
-                        android:layout_marginLeft="10dp"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/comentarimage"
-                        android:layout_marginLeft="10dp"/>
-                    <!-- Puntuacion -->
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:layout_width="130dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectpositivo"
-                                android:layout_height="5dp"/>
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectnegativo"
-                                android:layout_height="5dp"/>
-                        </LinearLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                            android:src="@drawable/flag"
+                            android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="984"
-                                android:textColor="@color/positivo"
-                                android:textSize="24dp"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginLeft="5dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="200"
-                                android:textColor="@color/negativo"
-                                android:textSize="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="7dp"
-                                android:layout_marginTop="7dp"/>
-                        </RelativeLayout>
+                            android:text="Sacate una foto codeando a lo campeon"
+                            android:layout_marginLeft="15dp"
+                            android:textSize="14dp"
+                            />
                     </LinearLayout>
-                    <!-- / Puntuacion -->
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver 321 comentarios"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="50dp"/>
+                    </LinearLayout>
 
+
+                </LinearLayout>
+                <!-- / Publicacion -->
+
+                <!-- Primer publicacion de prueba -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="-160dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:src="@drawable/miniaturahometest1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="zuckerm"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="11dp"
+                            />
+                    </LinearLayout>
+
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/flag"
-                        android:layout_marginLeft="10dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sacate una foto codeando a lo campeon"
-                        android:layout_marginLeft="15dp"
-                        android:textSize="14dp"
+                        android:src="@drawable/imagenpublicaciontest1"
+                        android:scaleType="fitStart"
+                        android:layout_marginTop="15dp"
                         />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ver 321 comentarios"
-                        android:textStyle="bold"
-                        android:textSize="14dp"
-                        android:layout_marginLeft="50dp"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <!-- / Publicacion -->
-
-            <!-- Primer publicacion de prueba -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-160dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:src="@drawable/miniaturahometest1"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="zuckerm"
-                        android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="11dp"
-                        />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/imagenpublicaciontest1"
-                    android:scaleType="fitStart"
-                    android:layout_marginTop="15dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="-245dp"
-                    android:paddingLeft="15dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/positivoimage"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/negativoimage"
-                        android:layout_marginLeft="10dp"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/comentarimage"
-                        android:layout_marginLeft="10dp"/>
-                    <!-- Puntuacion -->
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp">
+                        android:orientation="horizontal"
+                        android:paddingRight="15dp"
+                        android:layout_marginTop="-245dp"
+                        android:paddingLeft="15dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/positivoimage"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/negativoimage"
+                            android:layout_marginLeft="10dp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/comentarimage"
+                            android:layout_marginLeft="10dp"/>
+                        <!-- Puntuacion -->
+
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
-                            <View
-                                android:layout_width="130dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectpositivo"
-                                android:layout_height="5dp"/>
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_weight=".3"
-                                android:background="@drawable/rectnegativo"
-                                android:layout_height="5dp"/>
+                                <View
+                                    android:layout_width="130dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectpositivo"
+                                    android:layout_height="5dp"/>
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectnegativo"
+                                    android:layout_height="5dp"/>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="984"
+                                    android:textColor="@color/positivo"
+                                    android:textSize="24dp"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginLeft="5dp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="200"
+                                    android:textColor="@color/negativo"
+                                    android:textSize="15dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_marginTop="7dp"/>
+                            </RelativeLayout>
                         </LinearLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="984"
-                                android:textColor="@color/positivo"
-                                android:textSize="24dp"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginLeft="5dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="200"
-                                android:textColor="@color/negativo"
-                                android:textSize="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="7dp"
-                                android:layout_marginTop="7dp"/>
-                        </RelativeLayout>
+                        <!-- / Puntuacion -->
                     </LinearLayout>
-                    <!-- / Puntuacion -->
-                </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/flag"
+                            android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sacate una foto codeando a lo campeon"
+                            android:layout_marginLeft="15dp"
+                            android:textSize="14dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver 321 comentarios"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="50dp"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <!-- / Publicacion -->
+
+                <!-- Primer publicacion de prueba -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="-160dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:src="@drawable/miniaturahometest1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="zuckerm"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="11dp"
+                            />
+                    </LinearLayout>
+
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/flag"
-                        android:layout_marginLeft="10dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sacate una foto codeando a lo campeon"
-                        android:layout_marginLeft="15dp"
-                        android:textSize="14dp"
+                        android:src="@drawable/imagenpublicaciontest1"
+                        android:scaleType="fitStart"
+                        android:layout_marginTop="15dp"
                         />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ver 321 comentarios"
-                        android:textStyle="bold"
-                        android:textSize="14dp"
-                        android:layout_marginLeft="50dp"/>
-                </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingRight="15dp"
+                        android:layout_marginTop="-245dp"
+                        android:paddingLeft="15dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/positivoimage"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/negativoimage"
+                            android:layout_marginLeft="10dp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/comentarimage"
+                            android:layout_marginLeft="10dp"/>
+                        <!-- Puntuacion -->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="40dp"
+                            android:paddingTop="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="130dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectpositivo"
+                                    android:layout_height="5dp"/>
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_weight=".3"
+                                    android:background="@drawable/rectnegativo"
+                                    android:layout_height="5dp"/>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="984"
+                                    android:textColor="@color/positivo"
+                                    android:textSize="24dp"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginLeft="5dp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="200"
+                                    android:textColor="@color/negativo"
+                                    android:textSize="15dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_marginTop="7dp"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+                        <!-- / Puntuacion -->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/flag"
+                            android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sacate una foto codeando a lo campeon"
+                            android:layout_marginLeft="15dp"
+                            android:textSize="14dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ver 321 comentarios"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="50dp"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <!-- / Publicacion -->
 
             </LinearLayout>
-            <!-- / Publicacion -->
-
-        </LinearLayout>
 
 
 
-    </ScrollView>
-    <!-- / Publicaciones -->
+        </ScrollView>
+        <!-- / Publicaciones -->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -476,21 +486,53 @@
         android:background="@color/celeste"
         android:layout_alignParentBottom="true"
         android:padding="8dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/positivoimage"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/positivoimage"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/positivoimage"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/positivoimage"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/desafios"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/notificaciones"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/perfil"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+
+
+
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>
