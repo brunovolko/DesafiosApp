@@ -15,6 +15,8 @@ import layout.HomeFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
+
+
     // Top NavBar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,23 +25,28 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
     }
 
-    public void changeFragment(View vista) {
-        Fragment fragment;
-        if(vista == findViewById(R.id.homeButton))
+    public void changeFragment(View vista)
+    {
+        if(vista == findViewById(R.id.btnHome))
         {
+            Fragment fragment;
             fragment = new HomeFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentTest, fragment);
+            ft.replace(R.id.fragmentContent, fragment);
             ft.commit();
-        } else if(vista == findViewById(R.id.desafiosButton))
+
+
+        } else if(vista == findViewById(R.id.btnDesafios))
         {
+            Fragment fragment;
             fragment = new DesafiosFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentTest, fragment);
+            ft.replace(R.id.fragmentContent, fragment);
             ft.commit();
         }
     }
+
 
 }
