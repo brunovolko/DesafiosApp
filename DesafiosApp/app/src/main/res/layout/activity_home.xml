@@ -469,6 +469,12 @@
 
                 </LinearLayout>
                 <!-- / Publicacion -->
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragmentTest"
+                    android:name="layout.HomeFragment">
+                </fragment>
 
             </LinearLayout>
 
@@ -489,6 +495,8 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight=".25"
+            android:id="@+id/homeButton"
+            android:onClick="changeFragment"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="wrap_content"
@@ -500,6 +508,8 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight=".25"
+            android:id="@+id/desafiosButton"
+            android:onClick="changeFragment"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="wrap_content"
