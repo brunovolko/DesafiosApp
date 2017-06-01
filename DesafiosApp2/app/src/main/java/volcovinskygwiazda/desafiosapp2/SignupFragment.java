@@ -27,7 +27,7 @@ public class SignupFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_signup, container, false);
     }
 
-    // Definimos AsyncTask
+    /*// Definimos AsyncTask
     private class BuscarDatos extends AsyncTask<String, Void, String> {
 
         protected void onPostExecute(String dato) {
@@ -58,7 +58,7 @@ public class SignupFragment extends Fragment {
             return new String();
         }
 
-    }
+    }*/
 
 
 }

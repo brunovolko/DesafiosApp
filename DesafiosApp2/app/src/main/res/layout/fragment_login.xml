@@ -28,11 +28,13 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtUsuarioLogin"
                 android:layout_marginTop="20dp"
                 android:hint="Usuario"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtContrasenaLogin"
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
                 android:hint="Contraseña"/>
@@ -41,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Ingresar"
                 android:background="#340067"
+                android:onClick="ejecutarIngresar"
                 android:textColor="#ffffff"
                 android:layout_marginTop="10dp"/>
 

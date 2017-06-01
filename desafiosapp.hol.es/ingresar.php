@@ -1,75 +1,43 @@
 <?php
-if($_SERVER['REQUEST_METHOD']=="POST") {
-	if(isset($_POST['usuario']) && !empty($_POST['usuario']) && isset($_POST['password']) && !empty($_POST['password'])) {
-		$usuario = $_POST['usuario'];
-		$password = $_POST['password'];
-		require_once("funciones.php");
-		require_once("conexion.php");
-		$consulta = $con->query("SELECT IDUSUARIO FROM usuarios WHERE usuario='$usuario' AND password='$password' LIMIT 1");
-		if($consulta->num_rows == 1) {
-			//Hashear Contraseña
-			if($usuario=='usuario' && $password=='password'){
-			
 
-
-
+if(isset($_POST['usuario']) && !empty($_POST['usuario']) && isset($_POST['password']) && !empty($_POST['password'])) {
+	require_once("funciones.php");
+	$usuario = asegurar($_POST['usuario']);
+	require_once("conexion.php");
+	$consulta = $con->query("SELECT IDUSUARIO, USUARIO, CONTRASENA FROM usuarios WHERE USUARIO='$usuario' AND ESTADO='activo' LIMIT 1");
+	if($consulta->num_rows == 1) {
+		require_once("PasswordHash.php");
+		$hasher = new PasswordHash(8, FALSE);
+		$registro = $consulta->fetch_array();
+		$contrasena = $registro["CONTRASENA"];
+		if ($hasher->CheckPassword($_POST['password'], $contrasena)) {
+			//Generar token
+			$caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"; //posibles caracteres a usar
+			$numerodeletras=22; //numero de letras para generar el texto
+			$hash = ""; //variable para almacenar la cadena generada
+			for($i=0;$i<$numerodeletras;$i++)
+			{
+			    $hash .= substr($caracteres,rand(0,strlen($caracteres)),1); //Extraemos 1 caracter de los caracteres entre el rango 0 a Numero de letras que tiene la cadena
 			}
 
+			//El usuario pudo haber cerrado sesion sin estar conectado a internet, por lo que la tabla puede estar desactualizada, asi que borramos.
+			$con->query("DELETE FROM tokens WHERE IDUSUARIO='$registro[IDUSUARIO]' LIMIT 1");
+
+			// Guardar token
+			$con->query("INSERT INTO tokens (TOKEN, IDUSUARIO) VALUES ('$hash', '$registro[IDUSUARIO]')");
+
+			$json = array("Token" => $hash, "IDUsuario" => $registro["IDUSUARIO"], "Usuario" => $registro["USUARIO"]);
+			echo json_encode($json);
+			mysqli_close($con);
+		} else { echo "error2"; mysqli_close($con);}
+		
 
 
-	}
-}
+
+	} else { echo "error2"; mysqli_close($con);}
 
 
-/*
-	
-	if(!isset($_SESSION) || empty($_SESSION['IDUSUARIO'])) {
-		if(validar($_GET['email']) && esEmail($_GET['email'])) {
-			$email = trim(strtolower(asegurar($_GET['email'])));
-			if(validar($_GET['password'])) {
-				
-				$consulta=$con->query("SELECT IDUSUARIO FROM usuarios WHERE usuario='$usuario' AND password='$password' LIMIT 1")
-				if($consulta->num_rows == 1) {
-					//Hashear Contraseña
-					if($usuario['ESTADO'] == 'proceso') {
-					
-					   mysqli_close($con);
-                     }
-                     else{
-                     	require_once("listardesafios.php");
-						$usuario = $consulta->fetch_array();
-                     	$_SESSION['IDUSUARIO'] = $usuario
-					    $_SESSION['ESTADO'] = "activo";
-					       mysqli_close($con);
-                     	 }
-		}
-	}
-}*/
-/*
-if($_SERVER['REQUEST_METHOD']=="GET"){
-	
-	if(isset($_GET['usuario']) && !empty($_GET['usuario']) && isset($_GET['password']) && !empty($_GET['password'])){
-		require_once("funciones.php");
-		require_once("conexion.php");
-		$usuario = asegurar($_GET['usuario']);
-		// Hashear contraseña 
-			$consulta=$con->query("SELECT IDUSUARIO FROM usuarios WHERE usuario='$usuario' AND password='$password' LIMIT 1")
-			/*$consulta = $con->query("SELECT tokens.IDUSUARIO FROM tokens INNER JOIN usuarios on tokens.IDUSUARIO = usuarios.IDUSUARIO WHERE tokens.TOKEN='$_POST["token"]' AND usuarios.ESTADO='activo' LIMIT 1");
-			if($consulta->num_rows == 1) {
-					// encontró el token
-					$usuarioToken = $consulta->fetch_array()["IDUSUARIO"];
-			if(isset($_GET["IDUSUARIO"]) && is_numeric($_GET["IDUSUARIO"])) {
-				$idusuario = $_GET["IDUSUARIO"];
-				if($idusuario == $usuarioToken) {
-					require_once("listardesafios.php");
-					echo "el Usuario se ingreso correctamente";
-				}
-			}
-		}
-	}
-}
-} else {
-	echo "error";
-}
-*/
+
+} else { echo "error2"; }
+
 ?>
