@@ -6,6 +6,13 @@
 
     <fragment
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="layout.InitialFragment"
+        android:id="@+id/fragmentContenedor"
+        ></fragment>
+
+    <!--<fragment
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="layout.InitialFragment"
         android:id="@+id/fragmentContent"
@@ -69,6 +76,6 @@
 
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>
