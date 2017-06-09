@@ -9,13 +9,15 @@ public class desafio {
     private int idUsuario;
     private String usuario;
     private String desafio;
+    private int tieneImagen;
 
-    public desafio(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado)
+    public desafio(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado, int tieneImagenIngresado)
     {
         id = idIngresado;
         idUsuario = idUsuarioIngresado;
         desafio = desafioIngresado;
         usuario = usuarioIngresado;
+        tieneImagen = tieneImagenIngresado;
     }
 
     public int getId()
@@ -34,5 +36,6 @@ public class desafio {
     {
         return usuario;
     }
+    public int getTieneImagen() { return tieneImagen; }
 
 }

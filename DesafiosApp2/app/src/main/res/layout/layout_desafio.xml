@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imagenItemDesafio"
-            android:src="@drawable/miniaturahometest1"/>
+            android:src="@drawable/prueba2"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

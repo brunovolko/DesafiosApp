@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ public class DesafiosFragment extends Fragment {
     private listaDesafiosAdapter adapterDesafios;
     private List<desafio> listaDesafios;
     private int cantDesafios;
+    TextView btnNuevoDesafio;
     MainActivity actividadAnfitriona;
     AlertDialog alert;
     private TextView displayCantDesafios;
@@ -56,6 +59,14 @@ public class DesafiosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_desafios, container, false);
+
+        btnNuevoDesafio = (TextView)rootView.findViewById(R.id.btnNuevoDesafio);
+        btnNuevoDesafio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //nuevoDesafio();
+            }
+        });
 
         listViewDesafios = (ListView)rootView.findViewById(R.id.listViewDesafios);
         Log.d("Estado", "Adapter encontrado");
@@ -78,6 +89,16 @@ public class DesafiosFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         actividadAnfitriona = (MainActivity)getActivity();
+    }
+
+    private void nuevoDesafio()
+    {
+        Fragment fragment;
+        fragment = new NuevoDesafioFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragmentContenedor, fragment);
+        ft.commit();
     }
 
     // Definimos AsyncTask
@@ -125,7 +146,8 @@ public class DesafiosFragment extends Fragment {
                         int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
                         String DESAFIO = jsonObject.getString("DESAFIO");
                         String USUARIO = jsonObject.getString("USUARIO");
-                        desafioTemp = new desafio(IDDESAFIO, IDUSUARIO, DESAFIO, USUARIO);
+                        int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
+                        desafioTemp = new desafio(IDDESAFIO, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
                         listaDesafios.add(desafioTemp);
 
                     }
@@ -134,6 +156,15 @@ public class DesafiosFragment extends Fragment {
                     Log.d("Estado", "Listo para rockearla");
                     listViewDesafios.setAdapter(adapterDesafios);
                     Log.d("Estado", "Adapter seteado");
+
+                    listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(getContext(), "Clickeado desafio id " + view.getTag(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
 
                 }
                 catch (JSONException e)

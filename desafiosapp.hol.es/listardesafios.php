@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 			$idusuario = $consulta->fetch_array()["IDUSUARIO"];
 			// Esta logueado como un campeon, existe
 			$query = "
-			SELECT desafios.IDDESAFIO as IDDESAFIO, desafios.DESAFIO as DESAFIO, usuarios.USUARIO as USUARIO, desafios.IDUSUARIO as IDUSUARIO, desafios.FECHAHORA as FECHAHORA
+			SELECT desafios.IDDESAFIO as IDDESAFIO, desafios.DESAFIO as DESAFIO, usuarios.USUARIO as USUARIO, usuarios.TIENEIMAGEN as TIENEIMAGEN, desafios.IDUSUARIO as IDUSUARIO, desafios.FECHAHORA as FECHAHORA
 			FROM (desafios
 			INNER JOIN usuarios on desafios.IDUSUARIO = usuarios.IDUSUARIO)
 			INNER JOIN seguimientos on usuarios.IDUSUARIO = seguimientos.IDUSUARIOSEGUIDO
@@ -22,6 +22,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 					"IDDESAFIO" => $desafio["IDDESAFIO"],
 				    "IDUSUARIO" => $desafio["IDUSUARIO"],
 				    "USUARIO" => $desafio["USUARIO"],
+				    "TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
 				    "DESAFIO" => $desafio["DESAFIO"],
 				    "FECHAHORA" => $desafio["FECHAHORA"]
 				);
