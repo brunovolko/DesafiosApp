@@ -17,12 +17,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import layout.BienvenidaFragment;
 import layout.DesafiosFragment;
@@ -36,7 +39,12 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Usuario Usuario;
+    private ListView listViewDesafios;
+    private listaDesafiosAdapter adapterDesafios;
+    private List<desafio> listaDesafios;
+
+
+    public Usuario Usuario;
     baseSQLiteHelper accesoBase;
     SQLiteDatabase baseDatos;
     AlertDialog alert;
@@ -44,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
     EditText txtContrasenaLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Estado", "1");
         super.onCreate(savedInstanceState);
+        Log.d("Estado", "2");
         setContentView(R.layout.activity_main);
+        Log.d("Estado", "3");
 
         Fragment fragment;
         fragment = new BienvenidaFragment();
@@ -54,8 +65,12 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.fragmentContenedor, fragment);
         ft.commit();
 
+        Log.d("Estado", "2");
+
         accesoBase = new baseSQLiteHelper(getApplicationContext(),"dataBase",null,1);
         baseDatos = accesoBase.getWritableDatabase();
+
+        Log.d("Estado", "3");
 
         //Quiero ver si hay ya algo guardado
 
@@ -65,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             Cursor conjuntoRegistros;
             conjuntoRegistros = baseDatos.rawQuery("select token from usuario", null);
             Toast toastResultados;
+            Log.d("Estado", "4");
 
             if(conjuntoRegistros.moveToFirst() == true)
             {
@@ -90,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         Usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
     }
+
 
 
     public void abrirLogin(View vista)
@@ -166,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     //Parseo el JSON
                     JSONObject jsonResultado = new JSONObject(datos);
-                    Usuario Usuario;
                     Usuario = new Usuario(jsonResultado.getString("Token"), jsonResultado.getInt("IDUsuario"), jsonResultado.getString("Usuario"));
 
 
@@ -262,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
                     {
                         //Parseo el JSON
                         JSONObject jsonResultado = new JSONObject(datos);
-                        Usuario Usuario;
                         Usuario = new Usuario(jsonResultado.getString("Token"), jsonResultado.getInt("IDUsuario"), jsonResultado.getString("Usuario"));
 
 

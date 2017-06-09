@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
     public String Token;
     public int IDUsuario;
+    public boolean tieneImagen;
     public String Usuario;
 
     public Usuario(String hash, int id, String user)
@@ -16,6 +17,13 @@ public class Usuario implements Serializable {
         Token = hash;
         IDUsuario = id;
         Usuario = user;
+    }
+
+    public Usuario(int id, String user, Boolean tieneFoto)
+    {
+        IDUsuario = id;
+        Usuario = user;
+        tieneImagen = tieneFoto;
     }
 
 }

@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18 desafíos disponibles"
+                android:id="@+id/displayCantDesafios"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"/>
             <!--<ImageView
@@ -51,8 +51,15 @@
             android:textColor="#ffffff"
             android:background="#340067"/>
 
-        <!-- Items -->
-        <ScrollView
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewDesafios">
+
+        </ListView>
+
+
+        <!--<ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -60,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <!-- Comienzo publicacion -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,9 +111,10 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Fin publicacion -->
 
-                <!-- Comienzo publicacion -->
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,9 +158,10 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Fin publicacion -->
 
-                <!-- Comienzo publicacion -->
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -196,9 +205,10 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Fin publicacion -->
 
-                <!-- Comienzo publicacion -->
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -241,9 +251,10 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Fin publicacion -->
 
-                <!-- Comienzo publicacion -->
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -286,11 +297,11 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Fin publicacion -->
+
             </LinearLayout>
 
         </ScrollView>
-        <!-- Fin items -->
+        -->
 
         <!-- Comienzo item -->
 
