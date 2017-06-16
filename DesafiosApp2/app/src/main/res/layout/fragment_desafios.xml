@@ -48,9 +48,28 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listViewDesafios">
+            android:id="@+id/listViewDesafios"></ListView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:id="@+id/displayNoDesafios1"
+            android:layout_marginTop="40px"
+            android:visibility="invisible"
+            android:text="No hay desafios disponibles :("/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:textSize="15dp"
+            android:id="@+id/displayNoDesafios2"
+            android:visibility="invisible"
+            android:textAlignment="center"
+            android:text="Sigue a mas usuarios, y tendrás mas desafíos!"/>
 
-        </ListView>
+
 
     </LinearLayout>
 

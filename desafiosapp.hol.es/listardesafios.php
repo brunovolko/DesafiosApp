@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 			INNER JOIN usuarios on desafios.IDUSUARIO = usuarios.IDUSUARIO)
 			INNER JOIN seguimientos on usuarios.IDUSUARIO = seguimientos.IDUSUARIOSEGUIDO
 			WHERE seguimientos.IDUSUARIOSEGUIDOR = '$idusuario'
+			ORDER BY IDDESAFIO DESC
 			";
 			$consulta = $con->query($query);
 			$arrayDevolver = array();

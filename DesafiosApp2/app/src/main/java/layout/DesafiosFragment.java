@@ -2,9 +2,11 @@ package layout;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -51,6 +54,9 @@ public class DesafiosFragment extends Fragment {
     MainActivity actividadAnfitriona;
     AlertDialog alert;
     private TextView displayCantDesafios;
+    View rootView;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
 
@@ -58,7 +64,7 @@ public class DesafiosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_desafios, container, false);
+        rootView = inflater.inflate(R.layout.fragment_desafios, container, false);
 
         btnNuevoDesafio = (TextView)rootView.findViewById(R.id.btnNuevoDesafio);
         btnNuevoDesafio.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +76,7 @@ public class DesafiosFragment extends Fragment {
 
         listViewDesafios = (ListView)rootView.findViewById(R.id.listViewDesafios);
         AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
+        builder.setMessage("Cargando desafios...");
         alert = builder.create();
         alert.show();
 
@@ -112,12 +119,7 @@ public class DesafiosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", Toast.LENGTH_SHORT);
                 miToast.show();
-                Fragment fragment;
-                fragment = new BienvenidaFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragmentContenedor, fragment);
-                ft.commit();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
             }
             else
             {
@@ -131,31 +133,41 @@ public class DesafiosFragment extends Fragment {
                     desafio desafioTemp;
                     cantDesafios = jsonArray.length();
                     displayCantDesafios.setText(String.valueOf(cantDesafios) + " desafíos disponibles");
-                    for(int pos = 0; pos < cantDesafios; pos++)
+                    if(cantDesafios == 0)
                     {
-                        jsonObject = new JSONObject(jsonArray.get(pos).toString());
-                        int IDDESAFIO = Integer.valueOf(jsonObject.getString("IDDESAFIO"));
-                        int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
-                        String DESAFIO = jsonObject.getString("DESAFIO");
-                        String USUARIO = jsonObject.getString("USUARIO");
-                        int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
-                        desafioTemp = new desafio(IDDESAFIO, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
-                        listaDesafios.add(desafioTemp);
-
+                        TextView displayNoDesafios1 = (TextView)rootView.findViewById(R.id.displayNoDesafios1);
+                        TextView displayNoDesafios2 = (TextView)rootView.findViewById(R.id.displayNoDesafios2);
+                        displayNoDesafios1.setVisibility(View.VISIBLE);
+                        displayNoDesafios2.setVisibility(View.VISIBLE);
                     }
-
-                    adapterDesafios = new listaDesafiosAdapter(getActivity(), listaDesafios);
-                    Log.d("Estado", "Listo para rockearla");
-                    listViewDesafios.setAdapter(adapterDesafios);
-                    Log.d("Estado", "Adapter seteado");
-
-                    listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Toast.makeText(getContext(), "Clickeado desafio id " + view.getTag(), Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        for(int pos = 0; pos < cantDesafios; pos++)
+                        {
+                            jsonObject = new JSONObject(jsonArray.get(pos).toString());
+                            int IDDESAFIO = Integer.valueOf(jsonObject.getString("IDDESAFIO"));
+                            int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
+                            String DESAFIO = jsonObject.getString("DESAFIO");
+                            String USUARIO = jsonObject.getString("USUARIO");
+                            int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
+                            desafioTemp = new desafio(IDDESAFIO, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
+                            listaDesafios.add(desafioTemp);
 
                         }
-                    });
+
+                        adapterDesafios = new listaDesafiosAdapter(getActivity(), listaDesafios);
+                        Log.d("Estado", "Listo para rockearla");
+                        listViewDesafios.setAdapter(adapterDesafios);
+                        Log.d("Estado", "Adapter seteado");
+
+                        listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                desafioClickeado((int)view.getTag());
+                            }
+                        });
+                    }
+
 
 
                 }
@@ -200,6 +212,19 @@ public class DesafiosFragment extends Fragment {
             }
 
         }
+    }
+
+    void desafioClickeado(int tag)
+    {
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(actividadAnfitriona.getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }*/
+        actividadAnfitriona.desafioCumpliendo = tag;
+
+        actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new CumplirDesafioFragment());
+
+
     }
 
 

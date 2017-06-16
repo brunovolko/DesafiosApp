@@ -23,6 +23,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog alert;
     EditText txtUsuarioLogin;
     EditText txtContrasenaLogin;
+    public File image;
+
+    public int desafioCumpliendo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Estado", "1");
@@ -107,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         Usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
     }
+
+
 
     public void cambiarFragment(int donde, Fragment frag)
     {
