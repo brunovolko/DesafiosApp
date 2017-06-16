@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import layout.DesafiosFragment;
 
 /**
  * Created by Bruno on 8/6/2017.
@@ -72,6 +76,10 @@ public class listaDesafiosAdapter extends BaseAdapter {
 
         if(desafiosList.get(position).getTieneImagen() == 1)
         {
+            Glide.with(mContext)
+                    .load("http://proyectoinfo.hol.es/imagenes/usuarios/"+desafiosList.get(position).getIdUsuario()+".png")
+                    .into(imagenItemDesafio);
+
             /*//Tiene imagen
             Log.d("Estado", "Tiene imagen adapter en el desafio" + desafiosList.get(position).getId());
 
@@ -79,7 +87,7 @@ public class listaDesafiosAdapter extends BaseAdapter {
 
             new DownloadImageTask().execute(String.valueOf(desafiosList.get(position).getIdUsuario()));*/
 
-            new DownloadImageTask(imagenItemDesafio).execute("http://proyectoinfo.hol.es/imagenes/usuarios/"+desafiosList.get(position).getIdUsuario()+".png");
+            //new DownloadImageTask(imagenItemDesafio).execute("http://proyectoinfo.hol.es/imagenes/usuarios/"+desafiosList.get(position).getIdUsuario()+".png");
 
 
 

@@ -64,20 +64,16 @@ public class DesafiosFragment extends Fragment {
         btnNuevoDesafio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //nuevoDesafio();
+                nuevoDesafio();
             }
         });
 
         listViewDesafios = (ListView)rootView.findViewById(R.id.listViewDesafios);
-        Log.d("Estado", "Adapter encontrado");
         AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
-        builder.setMessage("Cargando desafios");
         alert = builder.create();
         alert.show();
-        Log.d("Estado", actividadAnfitriona.Usuario.Token);
 
         new buscarDesafiosOnline().execute(actividadAnfitriona.Usuario.Token);
-        Log.d("Estado", "Desafios cargados");
 
         displayCantDesafios = (TextView)rootView.findViewById(R.id.displayCantDesafios);
 
@@ -93,12 +89,8 @@ public class DesafiosFragment extends Fragment {
 
     private void nuevoDesafio()
     {
-        Fragment fragment;
-        fragment = new NuevoDesafioFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragmentContenedor, fragment);
-        ft.commit();
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new NuevoDesafioFragment());
+
     }
 
     // Definimos AsyncTask

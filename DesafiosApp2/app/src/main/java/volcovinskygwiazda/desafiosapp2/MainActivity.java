@@ -30,6 +30,7 @@ import java.util.List;
 import layout.BienvenidaFragment;
 import layout.DesafiosFragment;
 import layout.HomeFragment;
+import layout.NuevoDesafioFragment;
 import layout.PrincipalFragment;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -105,6 +106,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         Usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
+    }
+
+    public void cambiarFragment(int donde, Fragment frag)
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(donde, frag);
+        ft.commit();
+    }
+
+    public void cerrarTeclado()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 

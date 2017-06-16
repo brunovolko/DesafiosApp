@@ -1,13 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.NuevoDesafioFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    xmlns:android="http://schemas.android.com/apk/res/android" >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Cual es tu desafío?"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:id="@+id/displayCualEsTuDesafio"
+        android:layout_marginTop="30dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displayCualEsTuDesafio"
+        android:hint="Maximo 140 caracteres"
+        android:textAlignment="center"
+        android:id="@+id/txtDesafio"
+        android:maxLength="140"
+        android:layout_margin="15dp"
+        android:inputType="textMultiLine"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtDesafio"
+        android:text="140 caracteres restantes"
+        android:textSize="12dp"
+        android:id="@+id/displayCaracteresRestantes"
+        android:layout_marginLeft="30dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displayCaracteresRestantes"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:id="@+id/btnPublicarDesafio"
+        android:text="Publicar desafío"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="#ffffff"
+        android:background="#340067"/>
 
-</FrameLayout>
+
+</RelativeLayout>

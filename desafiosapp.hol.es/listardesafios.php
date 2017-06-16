@@ -29,6 +29,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 				$arrayDevolver[] = $temp;
 			}
 			echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
+			mysqli_close($con);
 		} else { echo 'error2'; mysqli_close($con); }
 	} else { echo 'error2'; }
 } else { echo 'error2'; }
