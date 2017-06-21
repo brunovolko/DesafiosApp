@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,8 +32,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -44,6 +52,8 @@ import volcovinskygwiazda.desafiosapp2.Usuario;
 import volcovinskygwiazda.desafiosapp2.desafio;
 import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
 
+import static android.app.Activity.RESULT_OK;
+
 public class DesafiosFragment extends Fragment {
 
     private ListView listViewDesafios;
@@ -57,6 +67,8 @@ public class DesafiosFragment extends Fragment {
     View rootView;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
 
 
 
@@ -75,6 +87,8 @@ public class DesafiosFragment extends Fragment {
         });
 
         listViewDesafios = (ListView)rootView.findViewById(R.id.listViewDesafios);
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
         builder.setMessage("Cargando desafios...");
         alert = builder.create();
@@ -160,6 +174,8 @@ public class DesafiosFragment extends Fragment {
                         listViewDesafios.setAdapter(adapterDesafios);
                         Log.d("Estado", "Adapter seteado");
 
+                        registerForContextMenu(listViewDesafios);
+
                         listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -182,6 +198,7 @@ public class DesafiosFragment extends Fragment {
 
             //miToast.show();
         }
+
 
         @Override
         protected String doInBackground(String... parametros) {
@@ -214,15 +231,122 @@ public class DesafiosFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = new MenuInflater(actividadAnfitriona.getApplicationContext());
+        inflater.inflate(R.menu.ctxmenudesafio, menu);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo Info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        switch (item.getItemId())
+        {
+            case R.id.btnTomarFoto:
+                Log.d("Estado", "foto" + actividadAnfitriona.desafioCumpliendo);
+                if(tomarFoto() == true)
+                {
+                    Log.d("Estado", "Camara abierta");
+                }
+                else
+                {
+                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la camara.", Toast.LENGTH_SHORT).show();
+                    Log.d("Estado", "Camara no se pudo abrir");
+                }
+                break;
+            case R.id.btnGaleria:
+                Log.d("Estado", "galria" + actividadAnfitriona.desafioCumpliendo);
+                break;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    File fileImagen;
+
+    boolean tomarFoto()
+    {
+        fileImagen = new File(actividadAnfitriona.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/");
+        if (!fileImagen.exists()) {
+            fileImagen.mkdir();
+        }
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        fileImagen = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/", date + ".jpg");
+        try {
+            fileImagen.createNewFile();
+        }
+        catch (IOException e)
+        {
+            Log.d("Estado", e.getMessage());
+            return false;
+        }
+
+        Uri outputFileUri = Uri.fromFile(fileImagen);
+
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+        startActivityForResult(cameraIntent, 0);
+
+        return true;
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            if(fileImagen.exists())
+            {
+                Log.d("Estado", "Imagen Guardada");
+                actividadAnfitriona.image = fileImagen;
+
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment());
+            }
+            else
+            {
+                Log.d("Estado", "La imagen no se guardo");
+            }
+
+        }
+    }
+
     void desafioClickeado(int tag)
     {
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(actividadAnfitriona.getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }*/
         actividadAnfitriona.desafioCumpliendo = tag;
 
-        actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new CumplirDesafioFragment());
+        boolean encontrado = false;
+        int indice = 0;
+        while(!encontrado && indice < listaDesafios.size())
+        {
+            if(listaDesafios.get(indice).getId() == tag)
+            {
+                encontrado = true;
+            }
+            else
+            {
+                indice++;
+            }
+
+        }
+        if(!encontrado)
+        {
+            Toast.makeText(actividadAnfitriona, "Ocurrio un error grave, por favor reinicie la aplicacion.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        actividadAnfitriona.textoDesafioCumpliendo = listaDesafios.get(indice).getDesafio();
+        actividadAnfitriona.openContextMenu(rootView.findViewById(R.id.listViewDesafios));
+
+
 
 
     }

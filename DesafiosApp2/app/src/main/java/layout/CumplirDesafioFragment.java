@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
@@ -43,10 +44,13 @@ public class CumplirDesafioFragment extends Fragment {
 
     View vista;
     MainActivity actividadAnfitriona;
-    ImageButton btnTomarFoto;
+    /*ImageButton btnTomarFoto;
     Camera mCamera;
     FrameLayout camera_view;
-    File directory;
+    File directory;*/
+    TextView textoDesafio;
+    ImageView imagenTomada;
+    ImageView btnVolverADesafios;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +59,21 @@ public class CumplirDesafioFragment extends Fragment {
         vista = inflater.inflate(R.layout.fragment_cumplir_desafio, container, false);
 
         actividadAnfitriona = (MainActivity)getActivity();
-        btnTomarFoto = (ImageButton)vista.findViewById(R.id.btnTomarFoto);
+
+        textoDesafio = (TextView)vista.findViewById(R.id.textoDesafio);
+        textoDesafio.setText(actividadAnfitriona.textoDesafioCumpliendo);
+        imagenTomada = (ImageView)vista.findViewById(R.id.imagenTomada);
+        Bitmap myBitmap = BitmapFactory.decodeFile(actividadAnfitriona.image.getAbsolutePath());
+        imagenTomada.setImageBitmap(myBitmap);
+        btnVolverADesafios = (ImageView)vista.findViewById(R.id.btnVolverADesafios);
+        btnVolverADesafios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
+            }
+        });
+
+        /*btnTomarFoto = (ImageButton)vista.findViewById(R.id.btnTomarFoto);
         btnTomarFoto.setLongClickable(false);
         btnTomarFoto.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -70,7 +88,9 @@ public class CumplirDesafioFragment extends Fragment {
             }
         });
 
-        ejecutarCamara();
+        verPreview();
+
+        ejecutarCamara();*/
 
 
 
@@ -78,9 +98,14 @@ public class CumplirDesafioFragment extends Fragment {
         return vista;
     }
 
+    void verPreview()
+    {
+
+    }
+
     void ejecutarCamara()
     {
-        final String TAG = "CameraActivity";
+        /*final String TAG = "CameraActivity";
 
 
         mCamera = null;
@@ -108,12 +133,12 @@ public class CumplirDesafioFragment extends Fragment {
                 actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new PrincipalFragment());
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
             }
-        });
+        });*/
     }
 
     void onClickTomarFoto()
     {
-        directory = new File(Environment.getExternalStorageDirectory() + "/DefyhallPictures/");
+        /*directory = new File(Environment.getExternalStorageDirectory() + "/DefyhallPictures/");
 
         if (!directory.exists()) {
             directory.mkdir();
@@ -127,28 +152,34 @@ public class CumplirDesafioFragment extends Fragment {
         for(int i=0;i<sizes.size();i++)
         {
 
+
             if(sizes.get(i).width > size.width)
                 size = sizes.get(i);
         }
 
+        Log.d("Estado", size.width + " " + size.height);
+
+
+
 
 
         parameters.setPictureFormat(ImageFormat.JPEG);
-        parameters.setPictureSize(1280, 720);
-        parameters.setPreviewSize(1280, 720);
+        parameters.setPictureSize(size.width, size.height);
+        parameters.setPreviewSize(size.width, size.height);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         parameters.setJpegQuality(100);
         parameters.setRotation(90);
         mCamera.setParameters(parameters);
-        mCamera.takePicture(null,null,photoCallback);
+        mCamera.takePicture(null,null,photoCallback);*/
 
 
     }
 
 
 
-    Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
+    /*Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
         public void onPictureTaken(byte[] data, Camera camera) {
+            Toast.makeText(actividadAnfitriona, "ok", Toast.LENGTH_SHORT).show();
 
             try {
                 actividadAnfitriona.image = new File(directory, "desafioCumplido.jpg");
@@ -162,11 +193,13 @@ public class CumplirDesafioFragment extends Fragment {
                 vistaCamara.setVisibility(View.INVISIBLE);
                 vistaFoto.setVisibility(View.VISIBLE);
                 ImageView imagenFoto = (ImageView)vista.findViewById(R.id.imagenFoto);
+
+
                 BitmapDrawable d = new BitmapDrawable(getResources(), actividadAnfitriona.image.getAbsolutePath()); // path is ur resultant //image
                 imagenFoto.setImageDrawable(d);
 
-                /*Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                imagenFoto.setImageBitmap(bitmap);*/
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                imagenFoto.setImageBitmap(bitmap);
 
                 imagenFoto.setRotation(90);
                 //.delete()
@@ -183,7 +216,7 @@ public class CumplirDesafioFragment extends Fragment {
             Toast.makeText(actividadAnfitriona, "ok", Toast.LENGTH_SHORT).show();
 
         }
-    };
+    };*/
 
 
 

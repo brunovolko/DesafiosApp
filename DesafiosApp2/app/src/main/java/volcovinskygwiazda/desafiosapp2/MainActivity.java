@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public File image;
 
     public int desafioCumpliendo;
+    public String textoDesafioCumpliendo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Estado", "1");

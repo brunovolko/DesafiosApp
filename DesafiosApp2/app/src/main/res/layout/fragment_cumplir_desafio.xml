@@ -2,44 +2,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/vistaCamara">
-        <FrameLayout
-            android:id="@+id/camera_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgClose"
-            android:layout_gravity="right|top"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
-            android:padding="20dp"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnTomarFoto"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-
-            android:layout_marginBottom="200dp"
-            android:background="@android:drawable/ic_menu_camera"
-            android:padding="30dp"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/vistaFoto"
-        android:visibility="invisible">
+        android:layout_height="wrap_content"
+        android:id="@+id/barraSuperior">
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imagenFoto"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnVolverADesafios"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_menu_send"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/barraSuperior"
+        android:id="@+id/barraDesafio"
+        android:layout_marginTop="30dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tinyflag"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textoDesafio"
+            android:text="Sacate una foto codeando a lo campeon"
+            android:layout_marginLeft="15dp"
+            android:textSize="13dp"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_below="@+id/barraDesafio"
+        android:layout_width="match_parent"
+        android:id="@+id/imagenTomada"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"/>
+
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tinyflag"
+            android:layout_marginLeft="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/desafioItemDesafio"
+            android:text="Sacate una foto codeando a lo campeon"
+            android:layout_marginLeft="15dp"
+            android:textSize="13dp"
+            />
+    </LinearLayout>-->
 
 </RelativeLayout>

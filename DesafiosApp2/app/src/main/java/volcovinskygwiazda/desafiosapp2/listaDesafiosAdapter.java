@@ -80,17 +80,6 @@ public class listaDesafiosAdapter extends BaseAdapter {
                     .load("http://proyectoinfo.hol.es/imagenes/usuarios/"+desafiosList.get(position).getIdUsuario()+".png")
                     .into(imagenItemDesafio);
 
-            /*//Tiene imagen
-            Log.d("Estado", "Tiene imagen adapter en el desafio" + desafiosList.get(position).getId());
-
-            imagenCargada = false;
-
-            new DownloadImageTask().execute(String.valueOf(desafiosList.get(position).getIdUsuario()));*/
-
-            //new DownloadImageTask(imagenItemDesafio).execute("http://proyectoinfo.hol.es/imagenes/usuarios/"+desafiosList.get(position).getIdUsuario()+".png");
-
-
-
         }
 
 
@@ -100,32 +89,7 @@ public class listaDesafiosAdapter extends BaseAdapter {
 
 
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon = null;
-            try {
-
-
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-                Log.d("Estado", String.valueOf(mIcon.getHeight()));
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
 
 
