@@ -259,6 +259,16 @@ public class DesafiosFragment extends Fragment {
                 break;
             case R.id.btnGaleria:
                 Log.d("Estado", "galria" + actividadAnfitriona.desafioCumpliendo);
+                if(abrirGaleria() == true)
+                {
+                    Log.d("Estado", "Galeria abierta");
+
+                }
+                else
+                {
+                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la galeria.", Toast.LENGTH_SHORT).show();
+                    Log.d("Estado", "Galeria abierta");
+                }
                 break;
         }
 
@@ -266,6 +276,14 @@ public class DesafiosFragment extends Fragment {
     }
 
     File fileImagen;
+
+    boolean abrirGaleria()
+    {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+        return true;
+    }
 
     boolean tomarFoto()
     {

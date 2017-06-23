@@ -9,10 +9,12 @@ import android.graphics.ImageFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
@@ -33,6 +35,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import volcovinskygwiazda.desafiosapp2.CameraView;
 import volcovinskygwiazda.desafiosapp2.MainActivity;
 import volcovinskygwiazda.desafiosapp2.R;
@@ -44,13 +52,11 @@ public class CumplirDesafioFragment extends Fragment {
 
     View vista;
     MainActivity actividadAnfitriona;
-    /*ImageButton btnTomarFoto;
-    Camera mCamera;
-    FrameLayout camera_view;
-    File directory;*/
     TextView textoDesafio;
     ImageView imagenTomada;
     ImageView btnVolverADesafios;
+    ImageView btnEnviarPublicacion;
+    AlertDialog alert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,25 +78,14 @@ public class CumplirDesafioFragment extends Fragment {
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
             }
         });
-
-        /*btnTomarFoto = (ImageButton)vista.findViewById(R.id.btnTomarFoto);
-        btnTomarFoto.setLongClickable(false);
-        btnTomarFoto.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return true;
-            }
-        });
-        btnTomarFoto.setOnClickListener(new View.OnClickListener() {
+        btnEnviarPublicacion = (ImageView)vista.findViewById(R.id.btnEnviarPublicacion);
+        btnEnviarPublicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickTomarFoto();
+                enviarPublicacion();
             }
         });
 
-        verPreview();
-
-        ejecutarCamara();*/
 
 
 
@@ -98,148 +93,79 @@ public class CumplirDesafioFragment extends Fragment {
         return vista;
     }
 
-    void verPreview()
+    void enviarPublicacion()
     {
-
+        actividadAnfitriona.cerrarTeclado();
+        AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
+        builder.setMessage("Publicando");
+        alert = builder.create();
+        alert.show();
+        new publicarDesafio().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.desafioCumpliendo));
     }
 
-    void ejecutarCamara()
-    {
-        /*final String TAG = "CameraActivity";
+    // Definimos AsyncTask
+    private class publicarDesafio extends AsyncTask<String, Void, String> {
 
+        protected void onPostExecute(String datos) {
+            super.onPostExecute(datos);
+            alert.hide();
 
-        mCamera = null;
-        CameraView mCameraView = null;
-
-
-        try{
-            mCamera = Camera.open();
-        } catch (Exception e){
-            Log.d("Estado", "Failed to get camera: " + e.getMessage());
-        }
-
-        if(mCamera != null) {
-            mCameraView = new CameraView(actividadAnfitriona, mCamera);
-            camera_view = (FrameLayout)vista.findViewById(R.id.camera_view);
-            camera_view.addView(mCameraView);//agrega la vista CameraView()
-        }
-
-        //boton para cerrar la aplicación.
-        ImageButton imgClose = (ImageButton)vista.findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Cierra la actividad.
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new PrincipalFragment());
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
+            if(datos.equals("error"))
+            {
+                Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", Toast.LENGTH_SHORT).show();
             }
-        });*/
-    }
+            else if(datos.equals("error2"))
+            {
+                // El token está mal, asi que a borrarloo y que vuelva al inicio
+                Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", Toast.LENGTH_SHORT).show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+            }
+            else
+            {
+                //ok
+                Toast.makeText(actividadAnfitriona, "Tu desafio fué creado con éxito!", Toast.LENGTH_SHORT).show();
+                //actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
+            }
 
-    void onClickTomarFoto()
-    {
-        /*directory = new File(Environment.getExternalStorageDirectory() + "/DefyhallPictures/");
 
-        if (!directory.exists()) {
-            directory.mkdir();
         }
 
-        Camera.Parameters parameters = mCamera.getParameters();
+        @Override
+        protected String doInBackground(String... parametros) {
 
-        List<Camera.Size> sizes = parameters.getSupportedPictureSizes();
-        Camera.Size size = sizes.get(0);
-        //Camera.Size size1 = sizes.get(0);
-        for(int i=0;i<sizes.size();i++)
-        {
+            OkHttpClient client = new OkHttpClient();
 
-
-            if(sizes.get(i).width > size.width)
-                size = sizes.get(i);
-        }
-
-        Log.d("Estado", size.width + " " + size.height);
+            final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
 
 
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("token", parametros[0])
+                    .addFormDataPart("desafio", parametros[1])
+                    //.addFormDataPart("imagen", actividadAnfitriona.image)
+                    .addFormDataPart("imagen", "profile.png", RequestBody.create(MEDIA_TYPE_JPG, actividadAnfitriona.image))
+                    .build();
 
 
-
-        parameters.setPictureFormat(ImageFormat.JPEG);
-        parameters.setPictureSize(size.width, size.height);
-        parameters.setPreviewSize(size.width, size.height);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        parameters.setJpegQuality(100);
-        parameters.setRotation(90);
-        mCamera.setParameters(parameters);
-        mCamera.takePicture(null,null,photoCallback);*/
-
-
-    }
-
-
-
-    /*Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
-        public void onPictureTaken(byte[] data, Camera camera) {
-            Toast.makeText(actividadAnfitriona, "ok", Toast.LENGTH_SHORT).show();
+            Request request = new Request.Builder()
+                    .url("http://proyectoinfo.hol.es/cumplirDesafio.php")
+                    .method("POST", RequestBody.create(null, new byte[0]))
+                    .post(requestBody)
+                    .build();
 
             try {
-                actividadAnfitriona.image = new File(directory, "desafioCumplido.jpg");
-                FileOutputStream out = new FileOutputStream(actividadAnfitriona.image);
-                out.write(data);
-                out.flush();
-                out.close();
-
-                RelativeLayout vistaCamara = (RelativeLayout)vista.findViewById(R.id.vistaCamara);
-                RelativeLayout vistaFoto = (RelativeLayout)vista.findViewById(R.id.vistaFoto);
-                vistaCamara.setVisibility(View.INVISIBLE);
-                vistaFoto.setVisibility(View.VISIBLE);
-                ImageView imagenFoto = (ImageView)vista.findViewById(R.id.imagenFoto);
-
-
-                BitmapDrawable d = new BitmapDrawable(getResources(), actividadAnfitriona.image.getAbsolutePath()); // path is ur resultant //image
-                imagenFoto.setImageDrawable(d);
-
-                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                imagenFoto.setImageBitmap(bitmap);
-
-                imagenFoto.setRotation(90);
-                //.delete()
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-
+                Response response = client.newCall(request).execute();
+                String resultado = response.body().string();
+                return resultado;
             } catch (IOException e) {
-                e.printStackTrace();
-
-            } catch (Exception e)
-            {
-                e.printStackTrace();
+                Log.d("Debug", e.getMessage());
+                //mostrarError(e.getMessage()); // Error de Network
+                return "error";
             }
-            Toast.makeText(actividadAnfitriona, "ok", Toast.LENGTH_SHORT).show();
 
         }
-    };*/
+    }
 
-
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Comprovamos que la foto se a realizado
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            //Creamos un bitmap con la imagen recientemente
-            //almacenada en la memoria
-            Bitmap bMap = BitmapFactory.decodeFile(
-                    Environment.getExternalStorageDirectory()+
-                            "/Tutorialeshtml5/"+"foto.jpg");
-            //Añadimos el bitmap al imageView para
-            //mostrarlo por pantalla
-            img.setImageBitmap(bMap);
-            Toast.makeText(actividadAnfitriona, "vamoo", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(actividadAnfitriona, "ups", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
 
 }
