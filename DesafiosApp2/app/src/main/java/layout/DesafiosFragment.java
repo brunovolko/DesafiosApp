@@ -1,17 +1,25 @@
 package layout;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -23,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,11 +43,15 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Exchanger;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -53,6 +66,7 @@ import volcovinskygwiazda.desafiosapp2.desafio;
 import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
 
 import static android.app.Activity.RESULT_OK;
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class DesafiosFragment extends Fragment {
 
@@ -65,6 +79,7 @@ public class DesafiosFragment extends Fragment {
     AlertDialog alert;
     private TextView displayCantDesafios;
     View rootView;
+    Uri imagenGaleriaUri;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -114,6 +129,8 @@ public class DesafiosFragment extends Fragment {
 
     }
 
+
+
     // Definimos AsyncTask
     private class buscarDesafiosOnline extends AsyncTask<String, Void, String> {
 
@@ -124,14 +141,14 @@ public class DesafiosFragment extends Fragment {
             if(datos.equals("error"))
             {
                 Toast miToast;
-                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", Toast.LENGTH_SHORT);
+                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", LENGTH_SHORT);
                 miToast.show();
             }
             else if(datos.equals("error2"))
             {
                 // El token está mal, asi que a borrarloo y que vuelva al inicio
                 Toast miToast;
-                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", Toast.LENGTH_SHORT);
+                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
                 actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
             }
@@ -253,7 +270,7 @@ public class DesafiosFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la camara.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la camara.", LENGTH_SHORT).show();
                     Log.d("Estado", "Camara no se pudo abrir");
                 }
                 break;
@@ -266,7 +283,7 @@ public class DesafiosFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la galeria.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(actividadAnfitriona, "Hubo un error al abrir la galeria.", LENGTH_SHORT).show();
                     Log.d("Estado", "Galeria abierta");
                 }
                 break;
@@ -282,7 +299,46 @@ public class DesafiosFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, 1);
+
+        /*fileImagen = new File(actividadAnfitriona.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/");
+        if (!fileImagen.exists()) {
+            fileImagen.mkdir();
+        }
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        fileImagen = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/", date + ".jpg");
+        try {
+            fileImagen.createNewFile();
+        }
+        catch (IOException e)
+        {
+            Log.d("Estado", e.getMessage());
+            return false;
+        }
+
+        Uri outputFileUri = Uri.fromFile(fileImagen);
+
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+        startActivityForResult(intent, 1);*/
+
+
         return true;
+    }
+
+    String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
     }
 
     boolean tomarFoto()
@@ -335,7 +391,90 @@ public class DesafiosFragment extends Fragment {
             }
 
         }
+        else if(requestCode == 1 && resultCode == RESULT_OK)
+        {
+            Log.d("Estado", "Imagen seleccionada");
+            imagenGaleriaUri = data.getData();
+
+
+
+            try
+            {
+
+                actividadAnfitriona.image = new File(getFilePath(getContext(), imagenGaleriaUri));
+            }
+            catch (URISyntaxException e)
+            {
+                Log.d("Estado", e.getMessage());
+            }
+
+            actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment());
+
+        }
     }
+
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(context.getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[]{
+                        split[1]
+                };
+            }
+        }
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
 
     void desafioClickeado(int tag)
     {
@@ -357,7 +496,7 @@ public class DesafiosFragment extends Fragment {
         }
         if(!encontrado)
         {
-            Toast.makeText(actividadAnfitriona, "Ocurrio un error grave, por favor reinicie la aplicacion.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(actividadAnfitriona, "Ocurrio un error grave, por favor reinicie la aplicacion.", LENGTH_SHORT).show();
             return;
         }
 

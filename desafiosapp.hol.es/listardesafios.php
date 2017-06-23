@@ -19,15 +19,18 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 			$consulta = $con->query($query);
 			$arrayDevolver = array();
 			while($desafio = $consulta->fetch_array()) {
-				$temp = array(
-					"IDDESAFIO" => $desafio["IDDESAFIO"],
-				    "IDUSUARIO" => $desafio["IDUSUARIO"],
-				    "USUARIO" => $desafio["USUARIO"],
-				    "TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
-				    "DESAFIO" => $desafio["DESAFIO"],
-				    "FECHAHORA" => $desafio["FECHAHORA"]
-				);
-				$arrayDevolver[] = $temp;
+				$consultaYaLoCumpli = $con->query("SELECT IDPUBLICACION FROM publicaciones WHERE IDDESAFIO='$desafio[IDDESAFIO]' AND IDUSUARIO='$idusuario' LIMIT 1");
+				if($consultaYaLoCumpli->num_rows == 0) {
+					$temp = array(
+						"IDDESAFIO" => $desafio["IDDESAFIO"],
+					    "IDUSUARIO" => $desafio["IDUSUARIO"],
+					    "USUARIO" => $desafio["USUARIO"],
+					    "TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
+					    "DESAFIO" => $desafio["DESAFIO"],
+					    "FECHAHORA" => $desafio["FECHAHORA"]
+					);
+					$arrayDevolver[] = $temp;
+				}
 			}
 			echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
 			mysqli_close($con);

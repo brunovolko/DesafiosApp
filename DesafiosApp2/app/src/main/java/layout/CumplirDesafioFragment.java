@@ -124,7 +124,7 @@ public class CumplirDesafioFragment extends Fragment {
             {
                 //ok
                 Toast.makeText(actividadAnfitriona, "Tu desafio fué creado con éxito!", Toast.LENGTH_SHORT).show();
-                //actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
             }
 
 

@@ -2,7 +2,7 @@
 
 if(isset($_POST['usuario']) && !empty($_POST['usuario']) && isset($_POST['password']) && !empty($_POST['password'])) {
 	require_once("funciones.php");
-	$usuario = asegurar($_POST['usuario']);
+	$usuario = strtolower(trim(asegurar($_POST['usuario'])));
 	require_once("conexion.php");
 	$consulta = $con->query("SELECT IDUSUARIO, USUARIO, CONTRASENA FROM usuarios WHERE USUARIO='$usuario' AND ESTADO='activo' LIMIT 1");
 	if($consulta->num_rows == 1) {

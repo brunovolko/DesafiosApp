@@ -26,4 +26,17 @@ public class Usuario implements Serializable {
         tieneImagen = tieneFoto;
     }
 
+    public String getUsuario()
+    {
+        return this.Usuario;
+    }
+    public int getIDUsuario()
+    {
+        return this.IDUsuario;
+    }
+    public boolean getTieneImagen()
+    {
+        return this.tieneImagen;
+    }
+
 }
