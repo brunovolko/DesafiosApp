@@ -105,7 +105,6 @@ public class BuscadorFragment extends Fragment {
         }
         if(!txtBuscador.getText().toString().trim().isEmpty())
         {
-            actividadAnfitriona.cerrarTeclado();
             displayEstado.setText("Buscando...");
             displayEstado.setVisibility(View.VISIBLE);
             task = (ejecutarBusqueda) new ejecutarBusqueda().execute(actividadAnfitriona.Usuario.Token, txtBuscador.getText().toString());
@@ -147,7 +146,7 @@ public class BuscadorFragment extends Fragment {
                     }
                     else
                     {
-                        displayEstado.setVisibility(View.INVISIBLE);
+                        displayEstado.setVisibility(View.GONE);
                         for(int pos = 0; pos < cantResultados; pos++)
                         {
                             jsonObject = new JSONObject(jsonArray.get(pos).toString());
