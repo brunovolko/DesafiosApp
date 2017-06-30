@@ -18,7 +18,8 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 										INNER JOIN seguimientos on publicaciones.IDUSUARIO = seguimientos.IDUSUARIOSEGUIDO)
 										INNER JOIN usuarios on publicaciones.IDUSUARIO = usuarios.IDUSUARIO)
 										INNER JOIN desafios on publicaciones.IDDESAFIO = desafios.IDDESAFIO
-										WHERE seguimientos.IDUSUARIOSEGUIDOR = '$idusuario' AND usuarios.ESTADO = 'activo' AND publicaciones.ESTADO = 'activa' ");
+										WHERE seguimientos.IDUSUARIOSEGUIDOR = '$idusuario' AND usuarios.ESTADO = 'activo' AND publicaciones.ESTADO = 'activa'
+										ORDER BY publicaciones.IDPUBLICACION DESC");
 
 			$arrayDevolver = array();
 			while($desafio = $consulta->fetch_array()) {

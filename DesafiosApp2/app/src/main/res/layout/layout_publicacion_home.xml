@@ -1,7 +1,8 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dp"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,6 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
+            android:id="@+id/imagenPerfilPublicacionHome"
             android:src="@drawable/miniaturahometest1"/>
         <TextView
             android:layout_width="wrap_content"
@@ -32,8 +34,9 @@
         android:layout_below="@+id/parteUno">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="450px"
-            android:src="@drawable/imagenpublicaciontest1"
+            android:layout_height="wrap_content"
+            android:id="@+id/imagenPublicacionHome"
+            android:src="@drawable/cargando_imagen_publicacion"
             android:layout_marginTop="15dp"
             />
     </LinearLayout>
@@ -130,6 +133,7 @@
             android:layout_height="wrap_content"
             android:text="Sacate una foto codeando a lo campeon"
             android:layout_marginLeft="15dp"
+            android:id="@+id/displayDesafioPublicacionHome"
             android:textSize="14dp"
             />
     </LinearLayout>

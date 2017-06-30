@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="70dp">
 
 
         <!-- Top nav -->
@@ -47,441 +48,38 @@
 
         <!-- / Top nav -->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/displaySigueUsuarios"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No tienes publicaciones para ver"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:layout_marginTop="30dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sigue a mas usuarios!"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"/>
+        </LinearLayout>
+
 
         <!-- Publicaciones-->
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
             android:id="@+id/listViewPublicacionesHome">
 
         </ListView>
-        <!--
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:src="@drawable/miniaturahometest1"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="zuckerm"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="11dp"
-                            />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/imagenpublicaciontest1"
-                        android:scaleType="fitStart"
-                        android:layout_marginTop="15dp"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp"
-                        android:layout_marginTop="-245dp"
-                        android:paddingLeft="15dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/positivoimage"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/negativoimage"
-                            android:layout_marginLeft="10dp"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/comentarimage"
-                            android:layout_marginLeft="10dp"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="40dp"
-                            android:paddingTop="10dp">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="130dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectpositivo"
-                                    android:layout_height="5dp"/>
-                                <View
-                                    android:layout_width="40dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectnegativo"
-                                    android:layout_height="5dp"/>
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="984"
-                                    android:textColor="@color/positivo"
-                                    android:textSize="24dp"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginLeft="5dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="200"
-                                    android:textColor="@color/negativo"
-                                    android:textSize="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="7dp"
-                                    android:layout_marginTop="7dp"/>
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/flag"
-                            android:layout_marginLeft="10dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sacate una foto codeando a lo campeon"
-                            android:layout_marginLeft="15dp"
-                            android:textSize="14dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver 321 comentarios"
-                            android:textStyle="bold"
-                            android:textSize="14dp"
-                            android:layout_marginLeft="50dp"/>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-160dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:src="@drawable/miniaturahometest1"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="zuckerm"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="11dp"
-                            />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/imagenpublicaciontest1"
-                        android:scaleType="fitStart"
-                        android:layout_marginTop="15dp"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp"
-                        android:layout_marginTop="-245dp"
-                        android:paddingLeft="15dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/positivoimage"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/negativoimage"
-                            android:layout_marginLeft="10dp"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/comentarimage"
-                            android:layout_marginLeft="10dp"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="40dp"
-                            android:paddingTop="10dp">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="130dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectpositivo"
-                                    android:layout_height="5dp"/>
-                                <View
-                                    android:layout_width="40dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectnegativo"
-                                    android:layout_height="5dp"/>
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="984"
-                                    android:textColor="@color/positivo"
-                                    android:textSize="24dp"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginLeft="5dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="200"
-                                    android:textColor="@color/negativo"
-                                    android:textSize="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="7dp"
-                                    android:layout_marginTop="7dp"/>
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/flag"
-                            android:layout_marginLeft="10dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sacate una foto codeando a lo campeon"
-                            android:layout_marginLeft="15dp"
-                            android:textSize="14dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver 321 comentarios"
-                            android:textStyle="bold"
-                            android:textSize="14dp"
-                            android:layout_marginLeft="50dp"/>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-160dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:src="@drawable/miniaturahometest1"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="zuckerm"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="11dp"
-                            />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/imagenpublicaciontest1"
-                        android:scaleType="fitStart"
-                        android:layout_marginTop="15dp"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp"
-                        android:layout_marginTop="-245dp"
-                        android:paddingLeft="15dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/positivoimage"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/negativoimage"
-                            android:layout_marginLeft="10dp"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/comentarimage"
-                            android:layout_marginLeft="10dp"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="40dp"
-                            android:paddingTop="10dp">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="130dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectpositivo"
-                                    android:layout_height="5dp"/>
-                                <View
-                                    android:layout_width="40dp"
-                                    android:layout_weight=".3"
-                                    android:background="@drawable/rectnegativo"
-                                    android:layout_height="5dp"/>
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="984"
-                                    android:textColor="@color/positivo"
-                                    android:textSize="24dp"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginLeft="5dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="200"
-                                    android:textColor="@color/negativo"
-                                    android:textSize="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="7dp"
-                                    android:layout_marginTop="7dp"/>
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/flag"
-                            android:layout_marginLeft="10dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sacate una foto codeando a lo campeon"
-                            android:layout_marginLeft="15dp"
-                            android:textSize="14dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver 321 comentarios"
-                            android:textStyle="bold"
-                            android:textSize="14dp"
-                            android:layout_marginLeft="50dp"/>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-
-            </LinearLayout>
-
-
-
-        </ScrollView>-->
 
     </LinearLayout>
 

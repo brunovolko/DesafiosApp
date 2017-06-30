@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -29,9 +31,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import volcovinskygwiazda.desafiosapp2.MainActivity;
+import volcovinskygwiazda.desafiosapp2.PublicacionesHomeAdapter;
 import volcovinskygwiazda.desafiosapp2.R;
 import volcovinskygwiazda.desafiosapp2.desafio;
 import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
+import volcovinskygwiazda.desafiosapp2.publicacion;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -39,7 +43,11 @@ public class HomeFragment extends Fragment {
 
     View vista;
     ImageView btnAbirBuscar;
+    private List<publicacion> listaPublicaciones;
     MainActivity actividadAnfitriona;
+    LinearLayout displaySigueUsuarios;
+    private int cantPublicaciones;
+    private PublicacionesHomeAdapter adapterPublicaciones;
     ListView listViewPublicacionesHome;
     AlertDialog alert;
 
@@ -51,6 +59,9 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_home, container, false);
+
+        displaySigueUsuarios = (LinearLayout)vista.findViewById(R.id.displaySigueUsuarios);
+        displaySigueUsuarios.setVisibility(View.GONE);
 
         btnAbirBuscar = (ImageView)vista.findViewById(R.id.btnAbrirBuscar);
         btnAbirBuscar.setOnClickListener(new View.OnClickListener() {
@@ -102,45 +113,44 @@ public class HomeFragment extends Fragment {
                     //Parseo el JSON
                     JSONArray jsonArray = new JSONArray(datos);
                     JSONObject jsonObject;
-                    listaDesafios = new ArrayList<>();
-                    desafio desafioTemp;
-                    cantDesafios = jsonArray.length();
-                    displayCantDesafios.setText(String.valueOf(cantDesafios) + " desafíos disponibles");
-                    if(cantDesafios == 0)
+                    listaPublicaciones = new ArrayList<>();
+                    publicacion publicacionTemp;
+                    cantPublicaciones = jsonArray.length();
+                    if(cantPublicaciones == 0)
                     {
-                        TextView displayNoDesafios1 = (TextView)rootView.findViewById(R.id.displayNoDesafios1);
-                        TextView displayNoDesafios2 = (TextView)rootView.findViewById(R.id.displayNoDesafios2);
-                        displayNoDesafios1.setVisibility(View.VISIBLE);
-                        displayNoDesafios2.setVisibility(View.VISIBLE);
+                        displaySigueUsuarios.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        for(int pos = 0; pos < cantDesafios; pos++)
+                        for(int pos = 0; pos < cantPublicaciones; pos++)
                         {
                             jsonObject = new JSONObject(jsonArray.get(pos).toString());
-                            int IDDESAFIO = Integer.valueOf(jsonObject.getString("IDDESAFIO"));
+                            int IDPUBLICACION = Integer.valueOf(jsonObject.getString("IDPUBLICACION"));
                             int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
                             String DESAFIO = jsonObject.getString("DESAFIO");
                             String USUARIO = jsonObject.getString("USUARIO");
                             int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
-                            desafioTemp = new desafio(IDDESAFIO, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
-                            listaDesafios.add(desafioTemp);
+                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
+                            listaPublicaciones.add(publicacionTemp);
+                            Log.d("Estado", jsonArray.get(pos).toString());
 
                         }
 
-                        adapterDesafios = new listaDesafiosAdapter(getActivity(), listaDesafios);
+                        adapterPublicaciones = new PublicacionesHomeAdapter(getActivity(), listaPublicaciones);
                         Log.d("Estado", "Listo para rockearla");
-                        listViewDesafios.setAdapter(adapterDesafios);
+                        listViewPublicacionesHome.setAdapter(adapterPublicaciones);
                         Log.d("Estado", "Adapter seteado");
 
-                        registerForContextMenu(listViewDesafios);
+                        listViewPublicacionesHome.setDivider(null);
 
-                        listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        //registerForContextMenu(listViewPublicacionesHome);
+
+                        /*listViewPublicacionesHome.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                desafioClickeado((int)view.getTag());
+                                //desafioClickeado((int)view.getTag());
                             }
-                        });
+                        });*/
                     }
 
 
@@ -172,7 +182,7 @@ public class HomeFragment extends Fragment {
 
 
             Request request = new Request.Builder()
-                    .url("http://proyectoinfo.hol.es/listardesafios.php")
+                    .url("http://proyectoinfo.hol.es/listarPublicacionesHome.php")
                     .method("POST", RequestBody.create(null, new byte[0]))
                     .post(requestBody)
                     .build();
