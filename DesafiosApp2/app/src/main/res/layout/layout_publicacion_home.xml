@@ -33,7 +33,7 @@
         android:id="@+id/parteDos"
         android:layout_below="@+id/parteUno">
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imagenPublicacionHome"
             android:src="@drawable/cargando_imagen_publicacion"

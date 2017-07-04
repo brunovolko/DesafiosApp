@@ -83,12 +83,18 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         DisplayMetrics metrics = resources.getDisplayMetrics();
 
         float anchoCelular = metrics.widthPixels;
+        float altoDeseado = anchoCelular * (float)1.1;
 
         float multiplicador;
 
         if(defaultHeight > defaultWidth)
         {
             Log.d("Estado", "Es mas alto que ancho");
+            // Alto fijo, se ajusta el ancho
+            // defaultAlto * X = altoDeseado
+
+            multiplicador = altoDeseado / defaultHeight;
+
         } else if(defaultWidth > defaultHeight)
         {
             Log.d("Estado", "Es mas ancho que largo");
@@ -97,8 +103,8 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
             // defaultAncho * X = anchoCelular
             multiplicador = anchoCelular / defaultWidth;
 
-            nuevoWidth = anchoCelular;
-            nuevoHeight = defaultHeight * multiplicador;
+            nuevoWidth = defaultWidth * multiplicador;
+            nuevoHeight = altoDeseado;
 
         } else
         {
