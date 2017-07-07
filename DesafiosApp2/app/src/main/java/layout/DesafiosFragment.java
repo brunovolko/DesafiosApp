@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ImageWriter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -41,15 +42,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Exchanger;
 
@@ -67,6 +74,8 @@ import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
 
 import static android.app.Activity.RESULT_OK;
 import static android.widget.Toast.LENGTH_SHORT;
+
+
 
 public class DesafiosFragment extends Fragment {
 
@@ -373,6 +382,34 @@ public class DesafiosFragment extends Fragment {
 
     }
 
+    File comprimirImagen(File tempFile)
+    {
+        try
+        {
+            String filePath = tempFile.getPath();
+            Bitmap bmp = BitmapFactory.decodeFile(filePath);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            //File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/temp.jpg");
+            //OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(tempFile));
+            bmp.compress(Bitmap.CompressFormat.JPEG, 50, os);
+            //Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+            os.close();
+
+            return tempFile;
+        }
+        catch (IOException e)
+        {
+            Log.d("Estado", e.getMessage());
+            Toast.makeText(actividadAnfitriona, "Ocurrio un error al procesar la imagen. Intentelo nuevamente.", LENGTH_SHORT).show();
+            return null;
+        }
+
+
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -381,7 +418,11 @@ public class DesafiosFragment extends Fragment {
             if(fileImagen.exists())
             {
                 Log.d("Estado", "Imagen Guardada");
-                actividadAnfitriona.image = fileImagen;
+
+                File imagenComprimida = comprimirImagen(fileImagen);
+
+
+                actividadAnfitriona.image = imagenComprimida;
 
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment());
             }
@@ -398,10 +439,15 @@ public class DesafiosFragment extends Fragment {
 
 
 
+
+
+
             try
             {
 
-                actividadAnfitriona.image = new File(getFilePath(getContext(), imagenGaleriaUri));
+                File imagenOriginal = new File(getFilePath(getContext(), imagenGaleriaUri));
+                File imagenComprimida = comprimirImagen(imagenOriginal);
+                actividadAnfitriona.image = imagenComprimida;
             }
             catch (URISyntaxException e)
             {

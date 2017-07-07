@@ -133,6 +133,7 @@ public class CumplirDesafioFragment extends Fragment {
         @Override
         protected String doInBackground(String... parametros) {
 
+
             OkHttpClient client = new OkHttpClient();
 
             final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
