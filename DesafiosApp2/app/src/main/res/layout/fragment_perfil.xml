@@ -35,53 +35,92 @@
 
         <!-- / Top nav -->
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/topNavPerfil">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight=".3"
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ejemplo"
                     android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight=".66"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="30dp"
-                        android:text="29"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:text="Seguidores"/>
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="30dp"
+                                android:text="29"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="15dp"
+                                android:text="Seguidores"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight=".3"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="30dp"
+                                android:text="29"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="15dp"
+                                android:text="Seguidos"/>
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="30dp"
-                        android:text="29"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:text="Seguidos"/>
-                </LinearLayout>
+                    android:background="@color/celeste"
+                    android:text="Seguir"
+                    android:layout_margin="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:padding="5dp"
+                    android:textSize="16dp"/>
             </LinearLayout>
-        </RelativeLayout>
+
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 
