@@ -168,8 +168,7 @@ public class BuscadorFragment extends Fragment {
                         listViewResultadosBusqueda.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                //Toast.makeText(actividadAnfitriona, view.getTag().toString(), LENGTH_SHORT).show();
-                                //actividadAnfitriona.abrirPerfil(view.getTag());
+                                actividadAnfitriona.perfilViendo = Integer.valueOf(view.getTag().toString());
                                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
                             }
                         });

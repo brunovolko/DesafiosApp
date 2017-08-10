@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     public int desafioCumpliendo;
     public String textoDesafioCumpliendo;
+
+    public int perfilViendo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Estado", "1");

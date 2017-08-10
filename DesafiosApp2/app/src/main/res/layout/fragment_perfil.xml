@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NombreUsuario"
+                android:id="@+id/tituloUsuarioPerfil"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
                 android:textSize="16dp"
@@ -59,6 +60,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ejemplo"
+                            android:id="@+id/imagenPerfilPublico"
                             android:layout_marginLeft="10dp"/>
                     </RelativeLayout>
                     <LinearLayout
@@ -81,12 +83,14 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_gravity="center"
+                                        android:id="@+id/seguidoresPerfil"
                                         android:layout_height="wrap_content"
                                         android:textSize="25dp"
                                         android:text="29"/>
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_gravity="center"
+                                        android:id="@+id/seguidosPerfil"
                                         android:layout_height="wrap_content"
                                         android:textSize="13dp"
                                         android:text="Seguidores"/>
