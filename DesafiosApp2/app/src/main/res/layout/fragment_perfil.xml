@@ -90,7 +90,6 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_gravity="center"
-                                        android:id="@+id/seguidosPerfil"
                                         android:layout_height="wrap_content"
                                         android:textSize="13dp"
                                         android:text="Seguidores"/>
@@ -107,6 +106,7 @@
                                     android:orientation="vertical">
                                     <TextView
                                         android:layout_width="wrap_content"
+                                        android:id="@+id/seguidosPerfil"
                                         android:layout_gravity="center"
                                         android:layout_height="wrap_content"
                                         android:textSize="25dp"

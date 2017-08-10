@@ -52,8 +52,9 @@ public class PerfilFragment extends Fragment {
         seguidoresPerfil = (TextView)vista.findViewById(R.id.seguidoresPerfil);
         seguidosPerfil = (TextView)vista.findViewById(R.id.seguidosPerfil);
 
+        Log.d("Estado", "Arrancamo el async");
         new ejecutarBusqueda().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
-
+        Log.d("Estado", "Terminamos el async");
 
 
         return vista;
@@ -85,7 +86,7 @@ public class PerfilFragment extends Fragment {
                 //ok
                 try
                 {
-                    /*//Parseo el JSON
+                    //Parseo el JSON
                     JSONObject jsonObject = new JSONObject(datos);
                     Usuario usuarioTemp;
 
@@ -93,14 +94,18 @@ public class PerfilFragment extends Fragment {
                     int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
                     String USUARIO = jsonObject.getString("USUARIO");
                     String TIENEIMAGEN = jsonObject.getString("TIENEIMAGEN");
-                    int SEGUIDORES = jsonObject.getInt("SEGUIDORES");
-                    int SEGUIDOS = jsonObject.getInt("SEGUIDOS");
+                    int SEGUIDORES = Integer.valueOf(jsonObject.getString("SEGUIDORES"));
+                    int SEGUIDOS = Integer.valueOf(jsonObject.getString("SEGUIDOS"));
 
                     usuarioTemp = new Usuario(IDUSUARIO, USUARIO, Boolean.valueOf(TIENEIMAGEN), SEGUIDORES, SEGUIDOS);
-
-                    /*tituloUsuarioPerfil.setText(usuarioTemp.Usuario);
-                    seguidosPerfil.setText(usuarioTemp.Seguidos);
-                    seguidoresPerfil.setText(usuarioTemp.Seguidores);*/
+                    Log.d("Estado", String.valueOf(usuarioTemp.IDUsuario));
+                    Log.d("Estado", usuarioTemp.Usuario);
+                    Log.d("Estado", String.valueOf(usuarioTemp.tieneImagen));
+                    Log.d("Estado", String.valueOf(usuarioTemp.Seguidores));
+                    Log.d("Estado", String.valueOf(usuarioTemp.Seguidos));
+                    tituloUsuarioPerfil.setText(usuarioTemp.Usuario);
+                    seguidosPerfil.setText(String.valueOf(usuarioTemp.Seguidos));
+                    seguidoresPerfil.setText(String.valueOf(usuarioTemp.Seguidores));
 
 
                 }
@@ -111,7 +116,7 @@ public class PerfilFragment extends Fragment {
                     miToast.show();
                 }
             }
-            Log.d("Estado", "Post");
+            Log.d("Estado", datos);
 
 
         }
