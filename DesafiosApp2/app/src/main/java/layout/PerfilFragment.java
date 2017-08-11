@@ -263,7 +263,7 @@ public class PerfilFragment extends Fragment {
 
                     usuarioTemp = new Usuario(IDUSUARIO, USUARIO, Boolean.valueOf(TIENEIMAGEN), SEGUIDORES, SEGUIDOS);
                     Log.d("Estado", String.valueOf(usuarioTemp.IDUsuario));
-                    Log.d("Estado", usuarioTemp.Usuario);                                            
+                    Log.d("Estado", usuarioTemp.Usuario);
                     Log.d("Estado", String.valueOf(usuarioTemp.tieneImagen));
                     Log.d("Estado", String.valueOf(usuarioTemp.Seguidores));
                     Log.d("Estado", String.valueOf(usuarioTemp.Seguidos));
