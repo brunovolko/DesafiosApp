@@ -1,6 +1,7 @@
 package volcovinskygwiazda.desafiosapp2;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -61,6 +62,7 @@ public class listaUsuariosAdapter extends BaseAdapter {
 
         if(resultadosList.get(position).getTieneImagen() == true)
         {
+            Log.d("Estado2", "Trayendo " + "http://proyectoinfo.hol.es/imagenes/usuarios/"+resultadosList.get(position).getIDUsuario()+".png");
             Glide.with(mContext)
                     .load("http://proyectoinfo.hol.es/imagenes/usuarios/"+resultadosList.get(position).getIDUsuario()+".png")
                     .into(imagenUsuario);

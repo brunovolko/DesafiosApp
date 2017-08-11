@@ -153,7 +153,16 @@ public class BuscadorFragment extends Fragment {
                             int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
                             String USUARIO = jsonObject.getString("USUARIO");
                             String TIENEIMAGEN = jsonObject.getString("TIENEIMAGEN");
-                            usuarioTemp = new Usuario(IDUSUARIO, USUARIO, Boolean.valueOf(TIENEIMAGEN));
+                            Boolean temp;
+                            if(TIENEIMAGEN.equals("1"))
+                            {
+                                temp = true;
+                            }
+                            else
+                            {
+                                temp = false;
+                            }
+                            usuarioTemp = new Usuario(IDUSUARIO, USUARIO, temp);
                             listaResultados.add(usuarioTemp);
 
                         }

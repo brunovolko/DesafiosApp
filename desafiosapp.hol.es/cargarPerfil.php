@@ -25,6 +25,17 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 				//Seguidos
 				$consulta = $con->query("SELECT count(IDSEGUIMIENTO) as seguidos FROM seguimientos WHERE IDUSUARIOSEGUIDOR='$_POST[idUsuario]'");
 				$seguidos = $consulta->fetch_array()["seguidos"];
+
+				//Lo sigue
+				$consulta = $con->query("SELECT COUNT(IDSEGUIMIENTO) as RESP FROM seguimientos WHERE IDUSUARIOSEGUIDO='$_POST[idUsuario]' AND IDUSUARIOSEGUIDOR='$idusuario' LIMIT 1");
+				$temp = $consulta->fetch_array()["RESP"];
+				if($temp == 1) {
+					//Lo sigue
+					$siguiendo = "1";
+				} else {
+					// No lo sigue
+					$siguiendo = "0";
+				}
 			
 
 				$arrayDevolver = array(
@@ -32,7 +43,8 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 					"USUARIO" => $usuario["USUARIO"],
 					"TIENEIMAGEN" => $usuario["TIENEIMAGEN"],
 					"SEGUIDORES" => $seguidores,
-					"SEGUIDOS" => $seguidos
+					"SEGUIDOS" => $seguidos,
+					"SIGUIENDO" => $siguiendo
 				);
 				echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
 				mysqli_close($con);
