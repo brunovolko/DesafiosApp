@@ -57,7 +57,6 @@ public class PerfilFragment extends Fragment {
     ImageView imagenUsuarioPerfil;
     TextView btnSeguimiento;
     TextView seguidosPerfil;
-    TextView displayErrores;
     ListView listviewPublicacionesHechasPerfilTemporal;
     Boolean siguiendoUsuario;
     FrameLayout framePublicacionesPerfil;
@@ -113,14 +112,13 @@ public class PerfilFragment extends Fragment {
         imagenUsuarioPerfil = (ImageView)vista.findViewById(R.id.imagenPerfilPublico);
 
         listviewPublicacionesHechasPerfilTemporal = (ListView)vista.findViewById(R.id.listviewPublicacionesHechasPerfilTemporal);
-        displayErrores = (TextView)vista.findViewById(R.id.displayErrores);
+
 
         Log.d("Estado", "Arrancamo el async");
         new ejecutarBusqueda().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
         Log.d("Estado", "Terminamos el async");
 
-        displayErrores.setVisibility(View.VISIBLE);
-        displayErrores.setText("Cargando publicaciones...");
+
 
         cargarDesafiosCompletados();
 
@@ -130,139 +128,24 @@ public class PerfilFragment extends Fragment {
 
     void cargarDesafiosCompletados()
     {
-        new buscarPublicacionesHechas().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
+
+        btnVerDesafiosCompletados.setShadowLayer(2, 1, 1, Color.parseColor("#000000"));
+        btnVerDesafiosCreados.setShadowLayer(0, 0, 0, Color.parseColor("#000000"));
+        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCompletadosFragment());
+
     }
 
     void cargarDesafiosCreados()
     {
-
+        btnVerDesafiosCreados.setShadowLayer(2, 1, 1, Color.parseColor("#000000"));
+        btnVerDesafiosCompletados.setShadowLayer(0, 0, 0, Color.parseColor("#000000"));
+        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCreadosFragment());
     }
 
 
 
 
-    // Definimos AsyncTask
-    private class buscarPublicacionesHechas extends AsyncTask<String, Void, String> {
 
-        protected void onPostExecute(String datos) {
-            super.onPostExecute(datos);
-
-            if(datos.equals("error"))
-            {
-                Toast miToast;
-                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", LENGTH_SHORT);
-                miToast.show();
-            }
-            else if(datos.equals("error2"))
-            {
-                // El token está mal, asi que a borrarloo y que vuelva al inicio
-                Toast miToast;
-                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
-                miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
-            }
-            else
-            {
-                Log.d("Estado", datos);
-                //ok
-                try
-                {
-                    //Parseo el JSON
-                    JSONArray jsonArray = new JSONArray(datos);
-                    JSONObject jsonObject;
-                    listaPublicaciones = new ArrayList<>();
-                    publicacion publicacionTemp;
-                    cantPublicaciones = jsonArray.length();
-                    if(cantPublicaciones == 0)
-                    {
-                        displayErrores.setText("El usuario no ha completado ningún desafío aún!");
-                    }
-                    else
-                    {
-                        displayErrores.setVisibility(View.GONE);
-                        for(int pos = 0; pos < cantPublicaciones; pos++)
-                        {
-                            jsonObject = new JSONObject(jsonArray.get(pos).toString());
-                            int IDPUBLICACION = Integer.valueOf(jsonObject.getString("IDPUBLICACION"));
-                            int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
-                            String DESAFIO = jsonObject.getString("DESAFIO");
-                            String USUARIO = jsonObject.getString("USUARIO");
-                            int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
-                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
-                            listaPublicaciones.add(publicacionTemp);
-                            Log.d("Estado", jsonArray.get(pos).toString());
-
-                        }
-
-                        adapterPublicaciones = new PublicacionesPerfilTemporalAdapter(getActivity(), listaPublicaciones);
-                        Log.d("Estado", "Listo para rockearla");
-
-
-                        listviewPublicacionesHechasPerfilTemporal.setAdapter(adapterPublicaciones);
-                        Log.d("Estado", "Adapter seteado");
-
-                        listviewPublicacionesHechasPerfilTemporal.setDivider(null);
-
-
-
-
-                        //registerForContextMenu(listViewPublicacionesHome);
-
-                        /*listViewPublicacionesHome.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                //desafioClickeado((int)view.getTag());
-                            }
-                        });*/
-                    }
-
-
-
-                }
-                catch (JSONException e)
-                {
-                    Toast miToast;
-                    miToast = Toast.makeText(actividadAnfitriona, e.getMessage(), Toast.LENGTH_LONG);
-                    miToast.show();
-                }
-            }
-
-
-            //miToast.show();
-        }
-
-
-        @Override
-        protected String doInBackground(String... parametros) {
-            Log.d("Estado", "Entra al doInBackground");
-            OkHttpClient client = new OkHttpClient();
-
-
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("token", parametros[0])
-                    .addFormDataPart("idUsuario", parametros[1])
-                    .build();
-
-
-            Request request = new Request.Builder()
-                    .url("http://proyectoinfo.hol.es/listarPublicacionesHechasPerfil.php")
-                    .method("POST", RequestBody.create(null, new byte[0]))
-                    .post(requestBody)
-                    .build();
-
-            try {
-                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
-                String resultado = response.body().string();
-                return resultado;
-            } catch (IOException e) {
-                Log.d("Debug", e.getMessage());
-                //mostrarError(e.getMessage()); // Error de Network
-                return "error";
-            }
-
-        }
-    }
 
 
 

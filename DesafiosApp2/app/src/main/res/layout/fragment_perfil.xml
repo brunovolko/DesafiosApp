@@ -151,10 +151,6 @@
                         android:background="@drawable/textlines2"
                         android:textAlignment="center"
                         android:paddingTop="10dp"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowColor="#000000"
-                        android:shadowRadius="2"
                         android:paddingBottom="10dp"
                         android:layout_weight=".5"/>
                     <TextView
@@ -168,27 +164,13 @@
                         android:paddingBottom="10dp"
                         android:layout_weight=".5"/>
                 </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/displayErrores"
-                    android:layout_below="@id/tabsPerfil"/>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/tabsPerfil"
                     android:layout_marginBottom="50dp"
                     android:id="@+id/framePublicacionesPerfil"></FrameLayout>
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_below="@+id/tabsPerfil"
-                    android:layout_marginBottom="50dp"
-                    android:listSelector="@android:color/transparent"
-                    android:id="@+id/listviewPublicacionesHechasPerfilTemporal"
-                    android:layout_height="match_parent"></ListView>
+
             </RelativeLayout>
         <!--</ScrollView>-->
 

@@ -113,6 +113,7 @@ public class DesafiosFragment extends Fragment {
         listViewDesafios = (ListView)rootView.findViewById(R.id.listViewDesafios);
 
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
         builder.setMessage("Cargando desafios...");
         alert = builder.create();
