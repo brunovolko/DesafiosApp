@@ -17,12 +17,15 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 			$consulta = $con->query($query);
 			$arrayDevolver = array();
 			while($usuario = $consulta->fetch_array()) {
-				$temp = array(
-				    "IDUSUARIO" => $usuario["IDUSUARIO"],
-				    "USUARIO" => $usuario["USUARIO"],
-				    "TIENEIMAGEN" => $usuario["TIENEIMAGEN"]
-				);
-				$arrayDevolver[] = $temp;
+				if($usuario["IDUSUARIO"] != $idusuario) {
+					$temp = array(
+					    "IDUSUARIO" => $usuario["IDUSUARIO"],
+					    "USUARIO" => $usuario["USUARIO"],
+					    "TIENEIMAGEN" => $usuario["TIENEIMAGEN"]
+					);
+					$arrayDevolver[] = $temp;
+				}
+				
 			}
 			echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
 			mysqli_close($con);

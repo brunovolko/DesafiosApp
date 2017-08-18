@@ -31,10 +31,12 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 				$temp = $consulta->fetch_array()["RESP"];
 				if($temp == 1) {
 					//Lo sigue
-					$siguiendo = "1";
+					//$siguiendo = "1";
+					$siguiendo = true;
 				} else {
 					// No lo sigue
-					$siguiendo = "0";
+					//$siguiendo = "0";
+					$siguiendo = false;
 				}
 			
 
@@ -44,7 +46,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 					"TIENEIMAGEN" => $usuario["TIENEIMAGEN"],
 					"SEGUIDORES" => $seguidores,
 					"SEGUIDOS" => $seguidos,
-					"SIGUIENDO" => $siguiendo
+					"SIGUIENDO" => (bool)$siguiendo
 				);
 				echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
 				mysqli_close($con);

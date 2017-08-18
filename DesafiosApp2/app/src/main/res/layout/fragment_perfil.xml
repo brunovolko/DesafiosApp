@@ -147,6 +147,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Completados"
+                        android:id="@+id/btnVerDesafiosCompletados"
                         android:background="@drawable/textlines2"
                         android:textAlignment="center"
                         android:paddingTop="10dp"
@@ -160,6 +161,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Creados"
+                        android:id="@+id/btnVerDesafiosCreados"
                         android:background="@drawable/textlines2"
                         android:textAlignment="center"
                         android:paddingTop="10dp"
@@ -174,9 +176,16 @@
                     android:layout_marginTop="15dp"
                     android:id="@+id/displayErrores"
                     android:layout_below="@id/tabsPerfil"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/tabsPerfil"
+                    android:layout_marginBottom="50dp"
+                    android:id="@+id/framePublicacionesPerfil"></FrameLayout>
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_below="@+id/tabsPerfil"
+                    android:layout_marginBottom="50dp"
                     android:listSelector="@android:color/transparent"
                     android:id="@+id/listviewPublicacionesHechasPerfilTemporal"
                     android:layout_height="match_parent"></ListView>

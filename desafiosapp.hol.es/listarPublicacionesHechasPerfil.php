@@ -20,8 +20,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 				$idUsuarioALeer = $_POST['idUsuario'];
 
 				$consulta = $con->query("SELECT publicaciones.IDPUBLICACION as IDPUBLICACION, desafios.DESAFIO as DESAFIO, usuarios.IDUSUARIO as IDUSUARIO, usuarios.USUARIO as USUARIO, usuarios.TIENEIMAGEN as TIENEIMAGEN
-										FROM ((publicaciones
-										INNER JOIN seguimientos on publicaciones.IDUSUARIO = seguimientos.IDUSUARIOSEGUIDO)
+										FROM (publicaciones
 										INNER JOIN usuarios on publicaciones.IDUSUARIO = usuarios.IDUSUARIO)
 										INNER JOIN desafios on publicaciones.IDDESAFIO = desafios.IDDESAFIO
 										WHERE publicaciones.IDUSUARIO = '$idUsuarioALeer' AND publicaciones.ESTADO = 'activa'

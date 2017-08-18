@@ -2,6 +2,7 @@ package layout;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,8 +49,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class PerfilFragment extends Fragment {
 
     MainActivity actividadAnfitriona;
-    TextView tituloUsuarioPerfil;
-    TextView seguidoresPerfil;
+    TextView tituloUsuarioPerfil, seguidoresPerfil, btnVerDesafiosCompletados, btnVerDesafiosCreados;
     ImageView btnVolverDelPerfil;
     private List<publicacion> listaPublicaciones;
     private int cantPublicaciones;
@@ -58,6 +59,8 @@ public class PerfilFragment extends Fragment {
     TextView seguidosPerfil;
     TextView displayErrores;
     ListView listviewPublicacionesHechasPerfilTemporal;
+    Boolean siguiendoUsuario;
+    FrameLayout framePublicacionesPerfil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +69,15 @@ public class PerfilFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_perfil, container, false);
         actividadAnfitriona = (MainActivity)getActivity();
 
+        framePublicacionesPerfil = (FrameLayout)vista.findViewById(R.id.framePublicacionesPerfil);
         btnSeguimiento = (TextView)vista.findViewById(R.id.btnSeguimiento);
+        btnSeguimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSeguimiento.setEnabled(false);
+                new enviarSeguimiento().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
+            }
+        });
 
         btnVolverDelPerfil = (ImageView)vista.findViewById(R.id.btnVolverDelPerfil);
         btnVolverDelPerfil.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +86,27 @@ public class PerfilFragment extends Fragment {
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
             }
         });
+
+
+
+        btnVerDesafiosCompletados = (TextView)vista.findViewById(R.id.btnVerDesafiosCompletados);
+        btnVerDesafiosCompletados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarDesafiosCompletados();
+            }
+        });
+
+        btnVerDesafiosCreados = (TextView)vista.findViewById(R.id.btnVerDesafiosCreados);
+        btnVerDesafiosCreados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarDesafiosCreados();
+            }
+        });
+
+
+
         tituloUsuarioPerfil = (TextView)vista.findViewById(R.id.tituloUsuarioPerfil);
         seguidoresPerfil = (TextView)vista.findViewById(R.id.seguidoresPerfil);
         seguidosPerfil = (TextView)vista.findViewById(R.id.seguidosPerfil);
@@ -90,10 +122,20 @@ public class PerfilFragment extends Fragment {
         displayErrores.setVisibility(View.VISIBLE);
         displayErrores.setText("Cargando publicaciones...");
 
-        new buscarPublicacionesHechas().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
+        cargarDesafiosCompletados();
 
 
         return vista;
+    }
+
+    void cargarDesafiosCompletados()
+    {
+        new buscarPublicacionesHechas().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
+    }
+
+    void cargarDesafiosCreados()
+    {
+
     }
 
 
@@ -246,8 +288,7 @@ public class PerfilFragment extends Fragment {
             else
             {
                 //ok
-                try
-                {
+                try {
                     //Parseo el JSON
                     JSONObject jsonObject = new JSONObject(datos);
                     Usuario usuarioTemp;
@@ -258,7 +299,9 @@ public class PerfilFragment extends Fragment {
                     String TIENEIMAGEN = jsonObject.getString("TIENEIMAGEN");
                     int SEGUIDORES = Integer.valueOf(jsonObject.getString("SEGUIDORES"));
                     int SEGUIDOS = Integer.valueOf(jsonObject.getString("SEGUIDOS"));
-                    /*String SIGUIENDO = jsonObject.getString("SIGUIENDO");*/
+                    siguiendoUsuario = jsonObject.getBoolean("SIGUIENDO");
+
+
 
 
                     usuarioTemp = new Usuario(IDUSUARIO, USUARIO, Boolean.valueOf(TIENEIMAGEN), SEGUIDORES, SEGUIDOS);
@@ -273,16 +316,16 @@ public class PerfilFragment extends Fragment {
 
                     imagenUsuarioPerfil.setImageResource(R.drawable.defaultuserperfil);
 
-                    /*if(SIGUIENDO.equals("1"))
+                    Log.d("Estado", " Siguiendo: " + siguiendoUsuario);
+
+                    if(siguiendoUsuario == true)
                     {
                         btnSeguimiento.setTextColor(Color.BLACK);
-                        btnSeguimiento.setBackgroundColor(Color.WHITE);
+                        btnSeguimiento.setBackgroundColor(Color.parseColor("#e6e6e6"));
+                        btnSeguimiento.setText("Dejar de seguir");
                     }
-                    else
-                    {
-                        btnSeguimiento.setTextColor(Color.WHITE);
-                        btnSeguimiento.setBackgroundColor(Color.parseColor(String.valueOf(R.color.celeste)));
-                    }*/
+
+
 
 
 
@@ -330,6 +373,90 @@ public class PerfilFragment extends Fragment {
 
             Request request = new Request.Builder()
                     .url("http://proyectoinfo.hol.es/cargarPerfil.php")
+                    .method("POST", RequestBody.create(null, new byte[0]))
+                    .post(requestBody)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                String resultado = response.body().string();
+                return resultado;
+            } catch (IOException e) {
+                Log.d("Debug", e.getMessage());
+                //mostrarError(e.getMessage()); // Error de Network
+                return "error";
+            }
+
+        }
+    }
+
+
+    // Definimos AsyncTask
+    private class enviarSeguimiento extends AsyncTask<String, Void, String> {
+
+        protected void onPostExecute(String datos) {
+            super.onPostExecute(datos);
+
+            if(datos.equals("error"))
+            {
+                btnSeguimiento.setEnabled(true);
+                Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", LENGTH_SHORT).show();
+            }
+            else if(datos.equals("error2"))
+            {
+                // El token está mal, asi que a borrarloo y que vuelva al inicio
+                Toast miToast;
+                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
+                miToast.show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+            }
+            else
+            {
+                //ok
+                btnSeguimiento.setEnabled(true);
+                Log.d("Estado", "Lo estaba siguiendo? " + siguiendoUsuario);
+                if(siguiendoUsuario)
+                {
+                    siguiendoUsuario = false;
+                    Log.d("Estado", "paso1");
+                    btnSeguimiento.setText("Seguir");
+                    Log.d("Estado", "paso2");
+                    btnSeguimiento.setTextColor(Color.WHITE);
+                    Log.d("Estado", "paso3");
+                    btnSeguimiento.setBackgroundColor(Color.parseColor("#48cde9"));
+                    Log.d("Estado", "paso4");
+                }
+                else
+                {
+                    siguiendoUsuario = true;
+                    btnSeguimiento.setTextColor(Color.BLACK);
+                    btnSeguimiento.setBackgroundColor(Color.parseColor("#e6e6e6"));
+                    btnSeguimiento.setText("Dejar de seguir");
+                }
+
+
+            }
+            Log.d("Estado", datos);
+
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... parametros) {
+            Log.d("Estado", "Entra al doInBackground");
+            OkHttpClient client = new OkHttpClient();
+
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("token", parametros[0])
+                    .addFormDataPart("idUsuario", parametros[1])
+                    .build();
+
+
+            Request request = new Request.Builder()
+                    .url("http://proyectoinfo.hol.es/seguimiento.php")
                     .method("POST", RequestBody.create(null, new byte[0]))
                     .post(requestBody)
                     .build();
