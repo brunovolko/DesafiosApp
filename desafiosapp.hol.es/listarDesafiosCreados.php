@@ -18,22 +18,20 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 				$idUsuarioALeer = $_POST['idUsuario'];
 
 				$query = "
-				SELECT desafios.IDDESAFIO as IDDESAFIO, desafios.DESAFIO as DESAFIO
+				SELECT IDDESAFIO as IDDESAFIO, DESAFIO as DESAFIO
 				FROM desafios
-				WHERE desafios.IDUSUARIO = '$idusuario'
+				WHERE IDUSUARIO = '$idUsuarioALeer'
 				ORDER BY IDDESAFIO DESC
 				";
 				$consulta = $con->query($query);
 				$arrayDevolver = array();
 				while($desafio = $consulta->fetch_array()) {
-					$consultaYaLoCumpli = $con->query("SELECT IDPUBLICACION FROM publicaciones WHERE IDDESAFIO='$desafio[IDDESAFIO]' AND IDUSUARIO='$idusuario' LIMIT 1");
-					if($consultaYaLoCumpli->num_rows == 0) {
-						$temp = array(
-							"IDDESAFIO" => $desafio["IDDESAFIO"],
-						    "DESAFIO" => $desafio["DESAFIO"]
-						);
-						$arrayDevolver[] = $temp;
-					}
+					
+					$temp = array(
+						"IDDESAFIO" => (int)$desafio["IDDESAFIO"],
+					    "DESAFIO" => $desafio["DESAFIO"]
+					);
+					$arrayDevolver[] = $temp;
 				}
 				echo json_encode($arrayDevolver, JSON_PRETTY_PRINT);
 				mysqli_close($con);

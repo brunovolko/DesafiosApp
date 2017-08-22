@@ -20,6 +20,13 @@ public class desafio {
         tieneImagen = tieneImagenIngresado;
     }
 
+    public desafio(int idIngresado, int idUsuarioIngresado, String desafioIngresado)
+    {
+        id = idIngresado;
+        idUsuario = idUsuarioIngresado;
+        desafio = desafioIngresado;
+    }
+
     public int getId()
     {
         return id;
