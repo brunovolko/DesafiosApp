@@ -1,6 +1,7 @@
 package layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,10 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,75 +30,54 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import volcovinskygwiazda.desafiosapp2.MainActivity;
+import volcovinskygwiazda.desafiosapp2.PublicacionesPerfilDesafioAdapter;
+import volcovinskygwiazda.desafiosapp2.PublicacionesPerfilTemporalAdapter;
 import volcovinskygwiazda.desafiosapp2.R;
-import volcovinskygwiazda.desafiosapp2.desafio;
-import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
-import volcovinskygwiazda.desafiosapp2.listaDesafiosCreadosAdapter;
+import volcovinskygwiazda.desafiosapp2.Usuario;
+import volcovinskygwiazda.desafiosapp2.publicacion;
 
-import static android.view.View.GONE;
 import static android.widget.Toast.LENGTH_SHORT;
 
-
-public class DesafiosCreadosFragment extends Fragment {
+public class PerfilDesafioFragment extends Fragment {
 
     MainActivity actividadAnfitriona;
     View vista;
-    private ListView listviewDesafiosCreadosPerfil;
-    private listaDesafiosCreadosAdapter adapterDesafios;
-    private List<desafio> listaDesafios;
+    private List<publicacion> listaPublicaciones;
+    private int cantPublicaciones;
+    private PublicacionesPerfilDesafioAdapter adapterPublicaciones;
+    ListView listViewPublicacionesPerfilDesafio;
     TextView displayErrores;
-    int cantDesafios;
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        vista = inflater.inflate(R.layout.fragment_desafios_creados, container, false);
+        vista = inflater.inflate(R.layout.fragment_perfil_desafio, container, false);
         actividadAnfitriona = (MainActivity)getActivity();
-
         displayErrores = (TextView)vista.findViewById(R.id.displayErrores);
 
-        listviewDesafiosCreadosPerfil = (ListView) vista.findViewById(R.id.listviewDesafiosCreadosPerfil);
-
-
         displayErrores.setVisibility(View.VISIBLE);
-        displayErrores.setText("Cargando desafíos...");
+        displayErrores.setText("Cargando publicaciones");
 
-        new buscarDesafiosOnline().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilViendo));
+        new ejecutarBusqueda().execute(actividadAnfitriona.Usuario.Token, String.valueOf(actividadAnfitriona.perfilDesafioViendo));
 
 
 
         return vista;
     }
 
-    private void abrirPerfilDesafio(int idDesafio)
-    {
-        actividadAnfitriona.perfilDesafioViendo = idDesafio;
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
-    }
-
-
-
 
     // Definimos AsyncTask
-    private class buscarDesafiosOnline extends AsyncTask<String, Void, String> {
+    private class ejecutarBusqueda extends AsyncTask<String, Void, String> {
 
         protected void onPostExecute(String datos) {
             super.onPostExecute(datos);
-
             Log.d("Estado", datos);
-
 
             if(datos.equals("error"))
             {
-                Toast miToast;
-                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", LENGTH_SHORT);
-                miToast.show();
-                displayErrores.setText("Error");
+                displayErrores.setText("Comprueba tu conexión a Internet.");
+                Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", LENGTH_SHORT).show();
             }
             else if(datos.equals("error2"))
             {
@@ -109,48 +90,56 @@ public class DesafiosCreadosFragment extends Fragment {
             else
             {
                 //ok
-                try
-                {
+                try {
+
                     //Parseo el JSON
                     JSONArray jsonArray = new JSONArray(datos);
                     JSONObject jsonObject;
-                    listaDesafios = new ArrayList<>();
-                    desafio desafioTemp;
-                    cantDesafios = jsonArray.length();
-                    if(cantDesafios == 0)
+                    listaPublicaciones = new ArrayList<>();
+                    publicacion publicacionTemp;
+                    cantPublicaciones = jsonArray.length();
+                    if(cantPublicaciones == 0)
                     {
-                        displayErrores.setText("El usuario aún no ha creado desafíos!");
+                        displayErrores.setText("Aún nadie completó el desafío!");
                     }
                     else
                     {
-                        for(int pos = 0; pos < cantDesafios; pos++)
+                        displayErrores.setVisibility(View.GONE);
+                        for(int pos = 0; pos < cantPublicaciones; pos++)
                         {
                             jsonObject = new JSONObject(jsonArray.get(pos).toString());
-                            int IDDESAFIO = Integer.valueOf(jsonObject.getString("IDDESAFIO"));
+                            int IDPUBLICACION = Integer.valueOf(jsonObject.getString("IDPUBLICACION"));
+                            int IDUSUARIO = Integer.valueOf(jsonObject.getString("IDUSUARIO"));
                             String DESAFIO = jsonObject.getString("DESAFIO");
-                            desafioTemp = new desafio(IDDESAFIO, actividadAnfitriona.perfilViendo, DESAFIO);
-                            listaDesafios.add(desafioTemp);
+                            String USUARIO = jsonObject.getString("USUARIO");
+                            int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
+                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
+                            listaPublicaciones.add(publicacionTemp);
+                            Log.d("Estado", jsonArray.get(pos).toString());
 
                         }
 
-                        adapterDesafios = new listaDesafiosCreadosAdapter(getActivity(), listaDesafios);
+                        adapterPublicaciones = new PublicacionesPerfilDesafioAdapter(getActivity(), listaPublicaciones);
                         Log.d("Estado", "Listo para rockearla");
-                        listviewDesafiosCreadosPerfil.setAdapter(adapterDesafios);
+
+
+                        listViewPublicacionesPerfilDesafio.setAdapter(adapterPublicaciones);
                         Log.d("Estado", "Adapter seteado");
 
-                        displayErrores.setVisibility(GONE);
+                        listViewPublicacionesPerfilDesafio.setDivider(null);
 
-                        registerForContextMenu(listviewDesafiosCreadosPerfil);
 
-                        listviewDesafiosCreadosPerfil.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+                        //registerForContextMenu(listViewPublicacionesHome);
+
+                        /*listViewPublicacionesHome.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                abrirPerfilDesafio((int)view.getTag());
+                                //desafioClickeado((int)view.getTag());
                             }
-                        });
+                        });*/
                     }
-
 
 
                 }
@@ -161,9 +150,9 @@ public class DesafiosCreadosFragment extends Fragment {
                     miToast.show();
                 }
             }
+            Log.d("Estado", datos);
 
 
-            //miToast.show();
         }
 
 
@@ -176,12 +165,12 @@ public class DesafiosCreadosFragment extends Fragment {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("token", parametros[0])
-                    .addFormDataPart("idUsuario", parametros[1])
+                    .addFormDataPart("idDesafio", parametros[1])
                     .build();
 
 
             Request request = new Request.Builder()
-                    .url("http://proyectoinfo.hol.es/listarDesafiosCreados.php")
+                    .url("http://proyectoinfo.hol.es/listarPerfilDesafio.php")
                     .method("POST", RequestBody.create(null, new byte[0]))
                     .post(requestBody)
                     .build();
