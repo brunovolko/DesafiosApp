@@ -30,11 +30,11 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 				while($desafio = $consulta->fetch_array()) {
 
 					$temp = array(
-						"IDPUBLICACION" => $desafio["IDPUBLICACION"],
+						"IDPUBLICACION" => (int)$desafio["IDPUBLICACION"],
 						"DESAFIO" => $desafio["DESAFIO"],
-						"IDUSUARIO" => $desafio["IDUSUARIO"],
+						"IDUSUARIO" => (int)$desafio["IDUSUARIO"],
 						"USUARIO" => $desafio["USUARIO"],
-						"TIENEIMAGEN" => $desafio["TIENEIMAGEN"]
+						"TIENEIMAGEN" => (int)$desafio["TIENEIMAGEN"]
 					);
 					$arrayDevolver[] = $temp;
 				}

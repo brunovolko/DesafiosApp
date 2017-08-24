@@ -16,7 +16,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnVolverDelPerfilDelDesafio"
+                android:id="@+id/btnVolverDelPerfilDeLaLista"
                 android:background="@drawable/ic_flechita_atras"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"/>
@@ -41,10 +41,11 @@
         android:textSize="18dp"
         android:id="@+id/displayErrores"/>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listViewPublicacionesPerfilDesafio"></ListView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/listViewPublicacionesPerfilDesafio"></ListView>
 
 
 </LinearLayout>

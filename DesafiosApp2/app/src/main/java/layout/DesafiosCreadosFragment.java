@@ -146,6 +146,7 @@ public class DesafiosCreadosFragment extends Fragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                                actividadAnfitriona.ref = "perfil";
                                 abrirPerfilDesafio((int)view.getTag());
                             }
                         });

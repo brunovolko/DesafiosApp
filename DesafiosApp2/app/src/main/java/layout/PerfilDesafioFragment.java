@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,9 @@ public class PerfilDesafioFragment extends Fragment {
     private int cantPublicaciones;
     private PublicacionesPerfilDesafioAdapter adapterPublicaciones;
     ListView listViewPublicacionesPerfilDesafio;
-    TextView displayErrores;
+    TextView displayErrores, tituloCantPerfilDesafio;
+    ImageView btnVolverDelPerfilDeLaLista;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +58,16 @@ public class PerfilDesafioFragment extends Fragment {
         vista = inflater.inflate(R.layout.fragment_perfil_desafio, container, false);
         actividadAnfitriona = (MainActivity)getActivity();
         displayErrores = (TextView)vista.findViewById(R.id.displayErrores);
+        tituloCantPerfilDesafio = (TextView)vista.findViewById(R.id.tituloCantPerfilDesafio);
+        btnVolverDelPerfilDeLaLista = (ImageView)vista.findViewById(R.id.btnVolverDelPerfilDeLaLista);
+        btnVolverDelPerfilDeLaLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                regresar();
+            }
+        });
+
+        listViewPublicacionesPerfilDesafio = (ListView)vista.findViewById(R.id.listViewPublicacionesPerfilDesafio);
 
         displayErrores.setVisibility(View.VISIBLE);
         displayErrores.setText("Cargando publicaciones");
@@ -64,6 +77,16 @@ public class PerfilDesafioFragment extends Fragment {
 
 
         return vista;
+    }
+
+    void regresar()
+    {
+        switch (actividadAnfitriona.ref)
+        {
+            case "perfil":
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                break;
+        }
     }
 
 
@@ -104,6 +127,7 @@ public class PerfilDesafioFragment extends Fragment {
                     }
                     else
                     {
+                        tituloCantPerfilDesafio.setText(cantPublicaciones + " publicaciones");
                         displayErrores.setVisibility(View.GONE);
                         for(int pos = 0; pos < cantPublicaciones; pos++)
                         {
