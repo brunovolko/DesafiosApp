@@ -357,11 +357,17 @@ public class DesafiosFragment extends Fragment {
         if (!fileImagen.exists()) {
             fileImagen.mkdir();
         }
+        /*if(fileImagen.exists())
+        {
+            //Toast.makeText(actividadAnfitriona, "Hasta aca ok", LENGTH_SHORT).show();
+            //Toast.makeText(actividadAnfitriona, fileImagen.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        }*/
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         String date = df.format(Calendar.getInstance().getTime());
 
-        fileImagen = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/", date + ".jpg");
+        //fileImagen = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/", date + ".jpg");
+        fileImagen = new File(actividadAnfitriona.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/DefyhallPictures/", date + ".jpg");
         try {
             fileImagen.createNewFile();
         }

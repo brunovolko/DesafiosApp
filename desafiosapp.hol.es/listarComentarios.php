@@ -2,7 +2,7 @@
 if($_SERVER['REQUEST_METHOD']=="POST") {
     require_once("funciones.php");
 
-    if(isset($_POST["token"]) && esSeguro($_POST["token"]) && isset($_POST['idPublicacion']) && is_numeric($_POST['idPublicacion']) && esSeguro($_POST['idUsuario'])) {
+    if(isset($_POST["token"]) && esSeguro($_POST["token"]) && isset($_POST['idPublicacion']) && is_numeric($_POST['idPublicacion'])) {
         require_once("conexion.php");
 
         $consulta = $con->query("SELECT tokens.IDUSUARIO as IDUSUARIO FROM tokens INNER JOIN usuarios on tokens.IDUSUARIO = usuarios.IDUSUARIO WHERE tokens.TOKEN='$_POST[token]' AND usuarios.ESTADO='activo' LIMIT 1");
@@ -11,19 +11,18 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
             $idusuario = $consulta->fetch_array()["IDUSUARIO"];
             // Esta logueado como un campeon, existe
 
-            //Ahora a chekear el usuario a leer
-            $consulta = $con->query("SELECT IDUSUARIO FROM usuarios WHERE IDUSUARIO='$_POST[idUsuario]' AND ESTADO='activo' LIMIT 1");
+            //Ahora a chekear la publicacion a leer
+            $consulta = $con->query("SELECT IDPUBLICACION FROM publicaciones WHERE IDPUBLICACION='$_POST[idPublicacion]' AND ESTADO='activa' LIMIT 1");
 
             if($consulta->num_rows == 1) {
                 //Okk
 
-                $idUsuarioALeer = $_POST['idUsuario'];
+                $idPublicacionALeer = $_POST['idPublicacion'];
 
-                $consulta = $con->query("SELECT publicaciones.IDPUBLICACION as IDPUBLICACION, desafios.DESAFIO as DESAFIO, usuarios.IDUSUARIO as IDUSUARIO, usuarios.USUARIO as USUARIO, usuarios.TIENEIMAGEN as TIENEIMAGEN
-                                        FROM (publicaciones
-                                        INNER JOIN usuarios on publicaciones.IDUSUARIO = usuarios.IDUSUARIO)
-                                        INNER JOIN desafios on publicaciones.IDDESAFIO = desafios.IDDESAFIO
-                                        WHERE publicaciones.IDUSUARIO = '$idUsuarioALeer' AND publicaciones.ESTADO = 'activa'
+                $consulta = $con->query("SELECT comentarios.IDCOMENTARIO as IDCOMENTARIO, comentarios.COMENTARIO as COMENTARIO, usuarios.IDUSUARIO as IDUSUARIO, usuarios.USUARIO as USUARIO
+                                        FROM comentarios
+                                        INNER JOIN usuarios on comentarios.IDUSUARIO = usuarios.IDUSUARIO
+                                        WHERE comentarios.IDPUBLICACION = '$idPublicacionALeer' AND comentarios.ESTADOCOMENTARIO = 'activo' AND usuarios.ESTADO = 'activo'
                                         ORDER BY publicaciones.IDPUBLICACION DESC");
 
                 $arrayDevolver = array();
