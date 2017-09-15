@@ -60,6 +60,17 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
 
         imagenPerfilPublicacionUser = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
 
+        TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        if(publicacionesList.get(position).getCantidadComentarios() == 0)
+        {
+            displayVerComentarios.setVisibility(View.GONE);
+        }
+        else
+        {
+            displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+        }
+
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
         displayNombreUsuario.setText(publicacionesList.get(position).getUsuario());
 

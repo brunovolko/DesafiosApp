@@ -148,6 +148,7 @@
             android:layout_height="wrap_content"
             android:text="Ver 321 comentarios"
             android:textStyle="bold"
+            android:id="@+id/displayVerComentarios"
             android:textSize="14dp"
             android:layout_marginLeft="50dp"/>
     </LinearLayout>

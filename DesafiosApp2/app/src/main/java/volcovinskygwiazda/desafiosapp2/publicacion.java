@@ -10,14 +10,16 @@ public class publicacion {
     private String usuario;
     private String desafio;
     private int tieneImagen;
+    private int cantidadComentarios;
 
-    public publicacion(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado, int tieneImagenIngresado)
+    public publicacion(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado, int tieneImagenIngresado, int cantidadComentariosIngresados)
     {
         idPublicacion = idIngresado;
         idUsuario = idUsuarioIngresado;
         desafio = desafioIngresado;
         usuario = usuarioIngresado;
         tieneImagen = tieneImagenIngresado;
+        cantidadComentarios = cantidadComentariosIngresados;
     }
 
     public int getId()
@@ -37,5 +39,9 @@ public class publicacion {
         return usuario;
     }
     public int getTieneImagen() { return tieneImagen; }
+    public int getCantidadComentarios()
+    {
+        return cantidadComentarios;
+    }
 
 }

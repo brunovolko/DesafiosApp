@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8 publicaciones"
+                android:text=""
                 android:id="@+id/tituloCantPerfilDesafio"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"

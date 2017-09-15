@@ -82,7 +82,23 @@ public class PerfilFragment extends Fragment {
         btnVolverDelPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*if(actividadAnfitriona.ref.matches("PerfilDesafio"))
+                {
+                    actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
+                }
+                else if(actividadAnfitriona.ref.matches("Buscador"))
+                {
+                    actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new BuscadorFragment());
+                }
+                else if(actividadAnfitriona.ref.matches("Home"))
+                {
+                    actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                }*/
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+
+
+
             }
         });
 

@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import layout.PerfilFragment;
+
 /**
  * Created by Bruno on 8/6/2017.
  */
@@ -28,6 +30,7 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
     private List<publicacion> publicacionesList;
     ImageView imagenPerfilPublicacionUser;
     View v;
+    MainActivity actividadAnfitriona;
     //Boolean imagenCargada;
 
     //Constructor
@@ -57,14 +60,27 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d("Errores", "aaaargfetrga");
         v = View.inflate(mContext, R.layout.layout_publicacion_home, null);
         //Seteo de valores etc
 
+        actividadAnfitriona = (MainActivity)mContext;
+
         Log.d("Errores", "aaaa");
 
         imagenPerfilPublicacionUser = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
+
+        TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        if(publicacionesList.get(position).getCantidadComentarios() == 0)
+        {
+            displayVerComentarios.setVisibility(View.GONE);
+        }
+        else
+        {
+            displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+        }
 
         Log.d("Errores", "1");
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
@@ -161,7 +177,26 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
                     .placeholder(R.drawable.defaultusericon)
                     .into(imagenPerfilPublicacionUser);
 
+
         }
+
+        imagenPerfilPublicacionUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
+                actividadAnfitriona.ref = "PerfilDesafio";
+            }
+        });
+
+        displayNombreUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
+                actividadAnfitriona.ref = "PerfilDesafio";
+            }
+        });
 
         imagenPerfilPublicacionUser.getLayoutParams().height = 105; // equivalente a los 35px
         imagenPerfilPublicacionUser.getLayoutParams().width = 105;

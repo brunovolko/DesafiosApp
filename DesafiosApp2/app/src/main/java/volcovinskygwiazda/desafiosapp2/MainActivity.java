@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public File image;
 
     public int desafioCumpliendo;
-    public String textoDesafioCumpliendo, ref;
+    public String textoDesafioCumpliendo, ref/*refPerfil, refPerfilDesafios*/;
 
     public int perfilViendo, perfilDesafioViendo;
     @Override

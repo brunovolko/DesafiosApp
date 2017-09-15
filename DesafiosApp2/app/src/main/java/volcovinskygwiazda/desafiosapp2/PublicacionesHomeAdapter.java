@@ -19,6 +19,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import layout.PerfilDesafioFragment;
+import layout.PerfilFragment;
+
 import static java.security.AccessController.getContext;
 
 /**
@@ -31,6 +34,7 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     private List<publicacion> publicacionesList;
     ImageView imagenPerfilPublicacionHome;
     View v;
+    MainActivity actividadAnfitriona;
     //Boolean imagenCargada;
 
     //Constructor
@@ -57,17 +61,51 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         v = View.inflate(mContext, R.layout.layout_publicacion_home, null);
         //Seteo de valores etc
 
+        actividadAnfitriona = (MainActivity)mContext;
+
         imagenPerfilPublicacionHome = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
+
+        TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        if(publicacionesList.get(position).getCantidadComentarios() == 0)
+        {
+            displayVerComentarios.setVisibility(View.GONE);
+        }
+        else
+        {
+            displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+        }
 
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
         displayNombreUsuario.setText(publicacionesList.get(position).getUsuario());
 
+        displayNombreUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Ir al perfil de este usuario
+                //La imagen debe hacer lo mismo
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
+                actividadAnfitriona.ref = "Home";
+
+            }
+        });
+
+
         TextView displayDesafioPublicacionHome = (TextView)v.findViewById(R.id.displayDesafioPublicacionHome);
         displayDesafioPublicacionHome.setText(publicacionesList.get(position).getDesafio());
+
+        /*displayDesafioPublicacionHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
+                actividadAnfitriona.perfilDesafioViendo = publicacionesList.get(position).get
+            }
+        });*/
 
         Drawable drawableImagen = ContextCompat.getDrawable(v.getContext(), R.drawable.imagenpublicaciontest1);
         Bitmap bitmap = ((BitmapDrawable)drawableImagen).getBitmap();
@@ -145,6 +183,17 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
                     .into(imagenPerfilPublicacionHome);
 
         }
+
+        imagenPerfilPublicacionHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Ir al perfil de este usuario
+                //La imagen debe hacer lo mismo
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
+
+            }
+        });
 
         imagenPerfilPublicacionHome.getLayoutParams().height = 105; // equivalente a los 35px
         imagenPerfilPublicacionHome.getLayoutParams().width = 105;

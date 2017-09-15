@@ -179,6 +179,7 @@ public class BuscadorFragment extends Fragment {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 actividadAnfitriona.perfilViendo = Integer.valueOf(view.getTag().toString());
                                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                                actividadAnfitriona.ref = "Buscador";
                             }
                         });
                     }

@@ -137,7 +137,8 @@ public class PerfilDesafioFragment extends Fragment {
                             String DESAFIO = jsonObject.getString("DESAFIO");
                             String USUARIO = jsonObject.getString("USUARIO");
                             int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
-                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN);
+                            int CANTIDADCOMENTARIOS = jsonObject.getInt("CANTIDADCOMENTARIOS");
+                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN, CANTIDADCOMENTARIOS);
                             listaPublicaciones.add(publicacionTemp);
                             Log.d("Estado", jsonArray.get(pos).toString());
 

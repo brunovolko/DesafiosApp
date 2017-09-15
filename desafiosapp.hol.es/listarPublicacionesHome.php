@@ -24,12 +24,39 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 			$arrayDevolver = array();
 			while($desafio = $consulta->fetch_array()) {
 
+				$idPublicacion = $desafio["IDPUBLICACION"];
+
+				/*$arrayDeComentarios = array();
+				//Traer comentarios
+				$consultaComentarios = $con->query("SELECT IDCOMENTARIO, COMENTARIO
+										FROM comentarios
+										WHERE IDPUBLICACION = '$idPublicacion' AND ESTADOCOMENTARIO = 'activo'
+										ORDER BY IDCOMENTARIO DESC");
+				while($comentario = $consultaComentarios->fetch_array()) {
+					$temp = array(
+						"IDCOMENTARIO" => (int)$comentario["IDCOMENTARIO"],
+						"COMENTARIO" => $comentario["COMENTARIO"]
+						);
+					$arrayDeComentarios[] = $temp;
+				}*/
+
+				//Cantidad de comentarios
+				$consultaComentarios = $con->query("SELECT COUNT(IDCOMENTARIO) as CANTIDAD
+										FROM comentarios
+										WHERE IDPUBLICACION = '$idPublicacion' AND ESTADOCOMENTARIO = 'activo'
+										");
+				$cantComentarios = $consultaComentarios->fetch_array()["CANTIDAD"];
+
+
+
 				$temp = array(
-					"IDPUBLICACION" => $desafio["IDPUBLICACION"],
+					"IDPUBLICACION" => $idPublicacion,
 					"DESAFIO" => $desafio["DESAFIO"],
 					"IDUSUARIO" => $desafio["IDUSUARIO"],
 					"USUARIO" => $desafio["USUARIO"],
-					"TIENEIMAGEN" => $desafio["TIENEIMAGEN"]
+					"TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
+					//"COMENTARIOS" => $arrayDeComentarios
+					"CANTIDADCOMENTARIOS" => (int)$cantComentarios
 				);
 				$arrayDevolver[] = $temp;
 			}
