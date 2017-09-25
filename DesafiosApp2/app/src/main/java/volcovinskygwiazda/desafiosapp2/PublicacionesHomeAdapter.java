@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import layout.ComentariosFragment;
 import layout.PerfilDesafioFragment;
 import layout.PerfilFragment;
 
@@ -33,6 +35,7 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     private Context mContext;
     private List<publicacion> publicacionesList;
     ImageView imagenPerfilPublicacionHome;
+    ImageView btnAbrirComentarios;
     View v;
     MainActivity actividadAnfitriona;
     //Boolean imagenCargada;
@@ -67,6 +70,8 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
 
         actividadAnfitriona = (MainActivity)mContext;
 
+        btnAbrirComentarios = (ImageView) v.findViewById(R.id.btnAbrirComentarios);
+
         imagenPerfilPublicacionHome = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
@@ -78,7 +83,20 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         else
         {
             displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+            displayVerComentarios.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirComentarios(publicacionesList.get(position).getId());
+                }
+            });
         }
+
+        btnAbrirComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirComentarios(publicacionesList.get(position).getId());
+            }
+        });
 
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
         displayNombreUsuario.setText(publicacionesList.get(position).getUsuario());
@@ -203,6 +221,12 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
 
         return v;
 
+    }
+
+    void abrirComentarios(int idPublicacion)
+    {
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.comentariosViendo = idPublicacion;
     }
 
 

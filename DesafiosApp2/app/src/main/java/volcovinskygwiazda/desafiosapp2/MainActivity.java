@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txtContrasenaLogin;
     public File image;
 
-    public int desafioCumpliendo;
+    public int desafioCumpliendo, comentariosViendo;
     public String textoDesafioCumpliendo, ref/*refPerfil, refPerfilDesafios*/;
 
     public int perfilViendo, perfilDesafioViendo;
