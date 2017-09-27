@@ -26,23 +26,14 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                                         ORDER BY publicaciones.IDPUBLICACION DESC");
 
                 $arrayDevolver = array();
-                while($desafio = $consulta->fetch_array()) {
-
-                    $idPublicacion = $desafio["IDPUBLICACION"];
-
-                    $consultaComentarios = $con->query("SELECT COUNT(IDCOMENTARIO) as CANTIDAD
-                                        FROM comentarios
-                                        WHERE IDPUBLICACION = '$idPublicacion' AND ESTADOCOMENTARIO = 'activo'
-                                        ");
-                    $cantComentarios = $consultaComentarios->fetch_array()["CANTIDAD"];
+                while($comentario = $consulta->fetch_array()) {
 
                     $temp = array(
-                        "IDPUBLICACION" => $desafio["IDPUBLICACION"],
-                        "DESAFIO" => $desafio["DESAFIO"],
-                        "IDUSUARIO" => $desafio["IDUSUARIO"],
-                        "USUARIO" => $desafio["USUARIO"],
-                        "TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
-                        "CANTIDADCOMENTARIOS" => $cantComentarios
+                        "IDCOMENTARIO" => (int)$comentario["IDCOMENTARIO"],
+                        "COMENTARIO" => $comentario["COMENTARIO"],
+                        "IDUSUARIO" => (int)$comentario["IDUSUARIO"],
+                        "USUARIO" => $comentario["USUARIO"],
+                        "IDPUBLICACION" => (int)$idPublicacionALeer
                     );
                     $arrayDevolver[] = $temp;
                 }
