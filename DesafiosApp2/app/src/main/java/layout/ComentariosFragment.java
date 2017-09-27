@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import volcovinskygwiazda.desafiosapp2.Comentario;
 import volcovinskygwiazda.desafiosapp2.MainActivity;
 import volcovinskygwiazda.desafiosapp2.R;
 import volcovinskygwiazda.desafiosapp2.desafio;
+import volcovinskygwiazda.desafiosapp2.listaComentariosAdapter;
 import volcovinskygwiazda.desafiosapp2.listaDesafiosAdapter;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -40,7 +43,10 @@ public class ComentariosFragment extends Fragment {
     View vista;
     MainActivity actividadAnfitriona;
     private List<Comentario> listaComentarios;
+    private ListView listViewComentarios;
     AlertDialog alert;
+    private listaComentariosAdapter adapterComentarios;
+    ImageView btnVolverDeComentarios;
     TextView tituloCantComentarios;
     TextView displayErrores;
     int cantComentarios;
@@ -52,10 +58,20 @@ public class ComentariosFragment extends Fragment {
         vista = inflater.inflate(R.layout.fragment_comentarios, container, false);
         actividadAnfitriona = (MainActivity)getActivity();
 
+        listViewComentarios = (ListView)vista.findViewById(R.id.listViewComentarios);
+
         tituloCantComentarios = (TextView)vista.findViewById(R.id.tituloCantComentarios);
 
+        btnVolverDeComentarios = (ImageView)vista.findViewById(R.id.btnVolverDeComentarios);
+        btnVolverDeComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+            }
+        });
+
         displayErrores = (TextView)vista.findViewById(R.id.displayErrores);
-        displayErrores.setVisibility(View.INVISIBLE);
+        displayErrores.setVisibility(View.GONE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
         builder.setMessage("Cargando comentarios...");
@@ -122,19 +138,19 @@ public class ComentariosFragment extends Fragment {
 
                         }
 
-                        adapterDesafios = new listaDesafiosAdapter(getActivity(), listaDesafios);
+                        adapterComentarios = new listaComentariosAdapter(getActivity(), listaComentarios);
                         Log.d("Estado", "Listo para rockearla");
-                        listViewDesafios.setAdapter(adapterDesafios);
+                        listViewComentarios.setAdapter(adapterComentarios);
                         Log.d("Estado", "Adapter seteado");
 
-                        registerForContextMenu(listViewDesafios);
+                        registerForContextMenu(listViewComentarios);
 
-                        listViewDesafios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        /*listViewComentarios.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 desafioClickeado((int)view.getTag());
                             }
-                        });
+                        });*/
                     }
 
 

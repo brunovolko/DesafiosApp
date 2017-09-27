@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                                         FROM comentarios
                                         INNER JOIN usuarios on comentarios.IDUSUARIO = usuarios.IDUSUARIO
                                         WHERE comentarios.IDPUBLICACION = '$idPublicacionALeer' AND comentarios.ESTADOCOMENTARIO = 'activo' AND usuarios.ESTADO = 'activo'
-                                        ORDER BY publicaciones.IDPUBLICACION DESC");
+                                        ORDER BY comentarios.IDCOMENTARIO ASC");
 
                 $arrayDevolver = array();
                 while($comentario = $consulta->fetch_array()) {

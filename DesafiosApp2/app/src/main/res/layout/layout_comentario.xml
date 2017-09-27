@@ -14,9 +14,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/desafioItemDesafio"
-            android:text="Sacate una foto codeando a lo campeon"
-            android:layout_marginLeft="15dp"
+            android:text="brunovolko"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/displayUsuario"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/displayComentario"
+            android:text="Este es un comentario de prueba, es por eso que me parece importante comentar"
+            android:layout_marginLeft="9dp"
             android:textSize="13dp"
             />
     </LinearLayout>
