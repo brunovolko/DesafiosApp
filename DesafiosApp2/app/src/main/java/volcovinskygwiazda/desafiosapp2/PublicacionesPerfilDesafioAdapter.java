@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import layout.ComentariosFragment;
 import layout.PerfilFragment;
 
 /**
@@ -73,6 +75,8 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
 
+        ImageView btnAbrirComentarios = (ImageView)v.findViewById(R.id.btnAbrirComentarios);
+
         if(publicacionesList.get(position).getCantidadComentarios() == 0)
         {
             displayVerComentarios.setVisibility(View.GONE);
@@ -80,7 +84,20 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
         else
         {
             displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+            displayVerComentarios.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirComentarios(publicacionesList.get(position).getId());
+                }
+            });
         }
+
+        btnAbrirComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirComentarios(publicacionesList.get(position).getId());
+            }
+        });
 
         Log.d("Errores", "1");
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
@@ -208,6 +225,11 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
 
     }
 
+    void abrirComentarios(int idPublicacion)
+    {
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.comentariosViendo = idPublicacion;
+    }
 
 
 

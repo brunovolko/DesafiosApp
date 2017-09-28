@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -120,8 +121,9 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         /*displayDesafioPublicacionHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
-                actividadAnfitriona.perfilDesafioViendo = publicacionesList.get(position).get
+
+                        actividadAnfitriona.ref = "perfil";
+                        abrirPerfilDesafio(publicacionesList.get(position).getIdDesafio);
             }
         });*/
 
@@ -227,6 +229,12 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     {
         actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
         actividadAnfitriona.comentariosViendo = idPublicacion;
+    }
+
+    private void abrirPerfilDesafio(int idDesafio)
+    {
+        actividadAnfitriona.perfilDesafioViendo = idDesafio;
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
     }
 
 

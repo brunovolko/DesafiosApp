@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import layout.ComentariosFragment;
+
 /**
  * Created by Bruno on 8/6/2017.
  */
@@ -27,6 +30,7 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
     private Context mContext;
     private List<publicacion> publicacionesList;
     ImageView imagenPerfilPublicacionUser;
+    MainActivity actividadAnfitriona;
     View v;
     //Boolean imagenCargada;
 
@@ -54,13 +58,17 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         v = View.inflate(mContext, R.layout.layout_publicacion_home, null);
         //Seteo de valores etc
+
+        actividadAnfitriona = (MainActivity)mContext;
 
         imagenPerfilPublicacionUser = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        ImageView btnAbrirComentarios = (ImageView)v.findViewById(R.id.btnAbrirComentarios);
 
         if(publicacionesList.get(position).getCantidadComentarios() == 0)
         {
@@ -69,7 +77,20 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
         else
         {
             displayVerComentarios.setText("Ver " + publicacionesList.get(position).getCantidadComentarios() + " comentarios");
+            displayVerComentarios.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirComentarios(publicacionesList.get(position).getId());
+                }
+            });
         }
+
+        btnAbrirComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirComentarios(publicacionesList.get(position).getId());
+            }
+        });
 
         TextView displayNombreUsuario = (TextView)v.findViewById(R.id.displayNombreUsuario);
         displayNombreUsuario.setText(publicacionesList.get(position).getUsuario());
@@ -162,6 +183,13 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
 
         return v;
 
+    }
+
+
+    void abrirComentarios(int idPublicacion)
+    {
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.comentariosViendo = idPublicacion;
     }
 
 
