@@ -26,6 +26,14 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 
 				$idPublicacion = $desafio["IDPUBLICACION"];
 
+				/*$consultaCalificacionPositiva = $con->query("SELECT COUNT(IDCALIFICACION) as CANT FROM calificaciones WHERE IDPUBLICACION='$idPublicacion' AND CALIFICACION='1'");
+				$cantidadPositivos = $consultaCalificacionPositiva->fetch_array()["CANT"];
+
+
+
+				$consultaCalificacionPositiva = $con->query("SELECT COUNT(IDCALIFICACION) as CANT FROM calificaciones WHERE IDPUBLICACION='$idPublicacion' AND CALIFICACION='1'");
+				$cantidadPositivos = $consultaCalificacionPositiva->fetch_array()["CANT"];*/
+
 				/*$arrayDeComentarios = array();
 				//Traer comentarios
 				$consultaComentarios = $con->query("SELECT IDCOMENTARIO, COMENTARIO
