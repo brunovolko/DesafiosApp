@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,9 +47,9 @@ public class ComentariosFragment extends Fragment {
     private ListView listViewComentarios;
     AlertDialog alert;
     private listaComentariosAdapter adapterComentarios;
-    ImageView btnVolverDeComentarios;
-    TextView tituloCantComentarios;
-    TextView displayErrores;
+    ImageView btnVolverDeComentarios, btnEnviarComentario;
+    TextView tituloCantComentarios, displayErrores;
+    EditText txtComentario;
     int cantComentarios;
 
     @Override
@@ -67,6 +68,15 @@ public class ComentariosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+            }
+        });
+
+        txtComentario = (EditText)vista.findViewById(R.id.txtComentario);
+        btnEnviarComentario = (ImageView)vista.findViewById(R.id.btnEnviarComentario);
+        btnEnviarComentario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enviarComentario();
             }
         });
 
@@ -198,6 +208,90 @@ public class ComentariosFragment extends Fragment {
                 return "error";
             }
 
+        }
+    }
+
+
+    // Definimos AsyncTask
+    private class enviarComentario extends AsyncTask<String, Void, String> {
+
+        protected void onPostExecute(String datos) {
+            super.onPostExecute(datos);
+            txtComentario.setFocusableInTouchMode(true);
+            btnEnviarComentario.setEnabled(true);
+
+            if(datos.equals("error"))
+            {
+                Toast miToast;
+                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet.", LENGTH_SHORT);
+                miToast.show();
+            }
+            else if(datos.equals("error2"))
+            {
+                // El token está mal, asi que a borrarloo y que vuelva al inicio
+                Toast miToast;
+                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
+                miToast.show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+            }
+            else
+            {
+                Toast.makeText(actividadAnfitriona, "Comentario enviado con éxito!", Toast.LENGTH_SHORT).show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+            }
+
+
+            //miToast.show();
+        }
+
+
+        @Override
+        protected String doInBackground(String... parametros) {
+            Log.d("Estado", "Entra al doInBackground");
+            OkHttpClient client = new OkHttpClient();
+
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("token", parametros[0])
+                    .addFormDataPart("idPublicacion", String.valueOf(actividadAnfitriona.comentariosViendo))
+                    .addFormDataPart("comentario", parametros[1])
+                    .build();
+
+
+            Request request = new Request.Builder()
+                    .url("http://proyectoinfo.hol.es/publicarComentario.php")
+                    .method("POST", RequestBody.create(null, new byte[0]))
+                    .post(requestBody)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                String resultado = response.body().string();
+                return resultado;
+            } catch (IOException e) {
+                Log.d("Debug", e.getMessage());
+                //mostrarError(e.getMessage()); // Error de Network
+                return "error";
+            }
+
+        }
+    }
+
+
+    void enviarComentario()
+    {
+        if(!txtComentario.getText().toString().trim().isEmpty())
+        {
+            //No esta vacio
+            //Enviar comentario
+            txtComentario.setFocusable(false);
+            btnEnviarComentario.setEnabled(false);
+
+            new enviarComentario().execute(actividadAnfitriona.Usuario.Token, txtComentario.getText().toString());
+
+
+            //EditText.setFocusableInTouchMode(true);
         }
     }
 

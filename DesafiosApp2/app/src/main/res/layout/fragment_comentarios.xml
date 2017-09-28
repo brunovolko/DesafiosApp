@@ -1,6 +1,7 @@
 <RelativeLayout
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:paddingBottom="50dp"
 android:orientation="vertical"
 xmlns:android="http://schemas.android.com/apk/res/android" >
 
@@ -44,18 +45,17 @@ xmlns:android="http://schemas.android.com/apk/res/android" >
         android:id="@+id/displayErrores"/>
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/topNavPerfil"
-        android:paddingBottom="50dp"
+        android:layout_above="@+id/barraComentar"
         android:id="@+id/listViewComentarios"></ListView>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/barraComentar"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-
         android:orientation="horizontal"
         >
         <EditText
@@ -65,13 +65,13 @@ xmlns:android="http://schemas.android.com/apk/res/android" >
             android:textSize="15dp"
             android:hint="Escribe un comentario"
             android:id="@+id/txtComentario"
-
             android:layout_margin="10dp"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight=".1"
+            android:id="@+id/btnEnviarComentario"
             android:src="@android:drawable/ic_menu_send"/>
 
     </LinearLayout>
