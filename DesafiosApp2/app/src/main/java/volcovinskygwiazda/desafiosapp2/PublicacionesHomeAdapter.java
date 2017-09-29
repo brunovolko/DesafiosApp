@@ -1,11 +1,16 @@
 package volcovinskygwiazda.desafiosapp2;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,15 +21,29 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
+import layout.BienvenidaFragment;
 import layout.ComentariosFragment;
+import layout.HomeFragment;
 import layout.PerfilDesafioFragment;
 import layout.PerfilFragment;
+import layout.PrincipalFragment;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static java.security.AccessController.getContext;
 
 /**
@@ -37,8 +56,15 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     private List<publicacion> publicacionesList;
     ImageView imagenPerfilPublicacionHome;
     ImageView btnAbrirComentarios;
+    Resources res;
     View v;
+    int publicacionActual;
     MainActivity actividadAnfitriona;
+
+    int calificacionIntentando;
+
+    ImageView btnCalificarPositivo, btnCalificarNegativo;
+
     //Boolean imagenCargada;
 
     //Constructor
@@ -69,6 +95,8 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         v = View.inflate(mContext, R.layout.layout_publicacion_home, null);
         //Seteo de valores etc
 
+        publicacionActual = publicacionesList.get(position).getId();
+
         actividadAnfitriona = (MainActivity)mContext;
 
         btnAbrirComentarios = (ImageView) v.findViewById(R.id.btnAbrirComentarios);
@@ -76,6 +104,92 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         imagenPerfilPublicacionHome = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        btnCalificarPositivo = (ImageView)v.findViewById(R.id.btnCalificarPositivo);
+        btnCalificarNegativo = (ImageView)v.findViewById(R.id.btnCalificarNegativo);
+
+        res = actividadAnfitriona.getResources();
+
+        switch (publicacionesList.get(position).getMiCalificacion())
+        {
+            case -1:
+                btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage));
+                btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage));
+                break;
+            case 0:
+                btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage));
+                btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage_activo));
+                break;
+            case 1:
+                btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage_activo));
+                btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage));
+                break;
+        }
+
+        btnCalificarPositivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnCalificarPositivo.setEnabled(false);
+                btnCalificarNegativo.setEnabled(false);
+                calificacionIntentando = 1;
+                new calificarTask().execute("http://proyectoinfo.hol.es/calificacionPositiva.php", String.valueOf(publicacionesList.get(position).getId()));
+
+                if(publicacionesList.get(position).getMiCalificacion() == 1)
+                {
+                    Log.d("Calificacion", "Sacando positivo");
+                    btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage));
+                    publicacionesList.get(position).actualizarCalificacion(-1);
+                }
+                else if(publicacionesList.get(position).getMiCalificacion() == 0)
+                {
+                    Log.d("Calificacion", "Sacando negativo y poniendo positivo");
+                    btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage_activo));
+                    btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage));
+                    publicacionesList.get(position).actualizarCalificacion(1);
+                }
+                else
+                {
+                    Log.d("Calificacion", "poniendo positivo");
+                    btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage_activo));
+                    publicacionesList.get(position).actualizarCalificacion(1);
+                }
+
+
+            }
+        });
+
+        btnCalificarNegativo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnCalificarPositivo.setEnabled(false);
+                btnCalificarNegativo.setEnabled(false);
+                calificacionIntentando = 0;
+                new calificarTask().execute("http://proyectoinfo.hol.es/calificacionNegativa.php", String.valueOf(publicacionesList.get(position).getId()));
+
+                if(publicacionesList.get(position).getMiCalificacion() == 1)
+                {
+                    Log.d("Calificacion", "Sacando positivo y poniendo negativo");
+                    btnCalificarPositivo.setImageResource(R.drawable.positivoimage);
+                    btnCalificarNegativo.setImageResource(R.drawable.negativoimage_activo);
+                    publicacionesList.get(position).actualizarCalificacion(0);
+                }
+                else if(publicacionesList.get(position).getMiCalificacion() == 0)
+                {
+                    Log.d("Calificacion", "Sacando negativo ");
+                    btnCalificarNegativo.setImageResource(R.drawable.negativoimage);
+                    publicacionesList.get(position).actualizarCalificacion(-1);
+                }
+                else
+                {
+                    Log.d("Calificacion", "poniendo negativo");
+                    btnCalificarNegativo.setImageResource(R.drawable.negativoimage_activo);
+                    publicacionesList.get(position).actualizarCalificacion(0);
+                }
+
+            }
+        });
+
+
 
         if(publicacionesList.get(position).getCantidadComentarios() == 0)
         {
@@ -235,6 +349,85 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
     {
         actividadAnfitriona.perfilDesafioViendo = idDesafio;
         actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
+    }
+
+    // Definimos AsyncTask
+    private class calificarTask extends AsyncTask<String, Void, String> {
+
+        protected void onPostExecute(String datos) {
+            super.onPostExecute(datos);
+
+            btnCalificarPositivo.setEnabled(true);
+            btnCalificarNegativo.setEnabled(true);
+
+            if(datos.equals("error"))
+            {
+                Toast miToast;
+                miToast = Toast.makeText(actividadAnfitriona, "Comprueba tu conexión a Internet", Toast.LENGTH_LONG);
+                miToast.show();
+            }
+            else if(datos.equals("error2"))
+            {
+                // El token está mal, asi que a borrarloo y que vuelva al inicio
+                Toast miToast;
+                miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
+                miToast.show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+            }
+            else
+            {
+
+                Log.d("Adapter", "Notify");
+                //actividadAnfitriona.adapterPublicaciones.notifyDataSetChanged();
+                /*//Perfectoo
+                if(calificacionIntentando == 1)
+                {
+                    btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage_activo));
+                    btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage));
+                }
+                else
+                {
+                    Log.d("Calificacion", "Negativando");
+                    btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage));
+                    btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage_activo));
+                }*/
+            }
+
+            calificacionIntentando = -1;
+
+
+            //miToast.show();
+        }
+
+        @Override
+        protected String doInBackground(String... parametros) {
+            OkHttpClient client = new OkHttpClient();
+
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("token", actividadAnfitriona.Usuario.Token)
+                    .addFormDataPart("idPublicacion", parametros[1])
+                    .build();
+
+
+            Request request = new Request.Builder()
+                    .url(parametros[0])
+                    .method("POST", RequestBody.create(null, new byte[0]))
+                    .post(requestBody)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                String resultado = response.body().string();
+                return resultado;
+            } catch (IOException e) {
+                Log.d("Debug", e.getMessage());
+                //mostrarError(e.getMessage()); // Error de Network
+                return "error";
+            }
+
+        }
     }
 
 

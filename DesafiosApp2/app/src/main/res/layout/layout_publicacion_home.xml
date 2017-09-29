@@ -55,11 +55,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btnCalificarPositivo"
             android:src="@drawable/positivoimage"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/negativoimage"
+            android:id="@+id/btnCalificarNegativo"
             android:layout_marginLeft="10dp"/>
         <ImageView
             android:layout_width="wrap_content"

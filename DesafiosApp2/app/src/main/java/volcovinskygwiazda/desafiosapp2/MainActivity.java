@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private listaDesafiosAdapter adapterDesafios;
     private List<desafio> listaDesafios;
 
+    public PublicacionesHomeAdapter adapterPublicaciones;
+
 
     public Usuario Usuario;
     baseSQLiteHelper accesoBase;
@@ -115,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
         Usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
     }
+
+
+
+
+
 
 
 

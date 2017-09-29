@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
     MainActivity actividadAnfitriona;
     LinearLayout displaySigueUsuarios;
     private int cantPublicaciones;
-    private PublicacionesHomeAdapter adapterPublicaciones;
+
     ListView listViewPublicacionesHome;
     AlertDialog alert;
 
@@ -83,6 +83,8 @@ public class HomeFragment extends Fragment {
 
         return vista;
     }
+
+
 
     // Definimos AsyncTask
     private class buscarPublicaciones extends AsyncTask<String, Void, String> {
@@ -131,15 +133,18 @@ public class HomeFragment extends Fragment {
                             String USUARIO = jsonObject.getString("USUARIO");
                             int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
                             int CANTIDADCOMENTARIOS = jsonObject.getInt("CANTIDADCOMENTARIOS");
-                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN, CANTIDADCOMENTARIOS);
+                            int CALIFICACIONESPOSITIVAS = jsonObject.getInt("CANTIDADPOSITIVOS");
+                            int CALIFICACIONESNEGATIVAS = jsonObject.getInt("CANTIDADNEGATIVOS");
+                            int MICALIFICACION = jsonObject.getInt("MICALIFICACION");
+                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN, CANTIDADCOMENTARIOS, CALIFICACIONESPOSITIVAS, CALIFICACIONESNEGATIVAS, MICALIFICACION);
                             listaPublicaciones.add(publicacionTemp);
                             Log.d("Estado", jsonArray.get(pos).toString());
 
                         }
 
-                        adapterPublicaciones = new PublicacionesHomeAdapter(getActivity(), listaPublicaciones);
+                        actividadAnfitriona.adapterPublicaciones = new PublicacionesHomeAdapter(getActivity(), listaPublicaciones);
                         Log.d("Estado", "Listo para rockearla");
-                        listViewPublicacionesHome.setAdapter(adapterPublicaciones);
+                        listViewPublicacionesHome.setAdapter(actividadAnfitriona.adapterPublicaciones);
                         Log.d("Estado", "Adapter seteado");
 
                         listViewPublicacionesHome.setDivider(null);
@@ -149,7 +154,8 @@ public class HomeFragment extends Fragment {
                         /*listViewPublicacionesHome.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                //desafioClickeado((int)view.getTag());
+                                Log.d("Adapter", "Notify");
+                                adapterPublicaciones.notifyDataSetChanged();
                             }
                         });*/
                     }

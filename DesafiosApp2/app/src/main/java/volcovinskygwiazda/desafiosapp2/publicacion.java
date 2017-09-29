@@ -11,6 +11,9 @@ public class publicacion {
     private String desafio;
     private int tieneImagen;
     private int cantidadComentarios;
+    private int calificacionesPositivas;
+    private int calificacionesNegativas;
+    private int miCalificacion;
 
     public publicacion(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado, int tieneImagenIngresado, int cantidadComentariosIngresados)
     {
@@ -20,6 +23,24 @@ public class publicacion {
         usuario = usuarioIngresado;
         tieneImagen = tieneImagenIngresado;
         cantidadComentarios = cantidadComentariosIngresados;
+    }
+
+    public void actualizarCalificacion(int nuevaCalificacion)
+    {
+        miCalificacion = nuevaCalificacion;
+    }
+
+    public publicacion(int idIngresado, int idUsuarioIngresado, String desafioIngresado, String usuarioIngresado, int tieneImagenIngresado, int cantidadComentariosIngresados, int calificacionesPositivasIngresadas, int calificacionesNegativasIngresadas, int miCalificacionIngresada)
+    {
+        idPublicacion = idIngresado;
+        idUsuario = idUsuarioIngresado;
+        desafio = desafioIngresado;
+        usuario = usuarioIngresado;
+        tieneImagen = tieneImagenIngresado;
+        cantidadComentarios = cantidadComentariosIngresados;
+        calificacionesPositivas = calificacionesPositivasIngresadas;
+        calificacionesNegativas = calificacionesNegativasIngresadas;
+        miCalificacion = miCalificacionIngresada;
     }
 
     public int getId()
@@ -42,6 +63,18 @@ public class publicacion {
     public int getCantidadComentarios()
     {
         return cantidadComentarios;
+    }
+    public int getCalificacionesPositivas()
+    {
+        return calificacionesPositivas;
+    }
+    public int getCalificacionesNegativas()
+    {
+        return calificacionesNegativas;
+    }
+    public int getMiCalificacion()
+    {
+        return miCalificacion;
     }
 
 }

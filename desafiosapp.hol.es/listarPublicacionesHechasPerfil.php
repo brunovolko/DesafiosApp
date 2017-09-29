@@ -31,6 +31,26 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 
 					$idPublicacion = $desafio["IDPUBLICACION"];
 
+
+					$consultaCalificacionPositiva = $con->query("SELECT COUNT(IDCALIFICACION) as CANT FROM calificaciones WHERE IDPUBLICACION='$idPublicacion' AND CALIFICACION='1'");
+					$cantidadPositivos = $consultaCalificacionPositiva->fetch_array()["CANT"];
+
+
+
+					$consultaCalificacionNegativa = $con->query("SELECT COUNT(IDCALIFICACION) as CANT FROM calificaciones WHERE IDPUBLICACION='$idPublicacion' AND CALIFICACION='0'");
+					$cantidadNegativos = $consultaCalificacionNegativa->fetch_array()["CANT"];
+
+					$consultaYoCalifique = $con->query("SELECT CALIFICACION FROM calificaciones WHERE IDPUBLICACION='$idPublicacion' AND IDUSUARIO='$idusuario' LIMIT 1");
+
+					$miCalificacion;
+					if($consultaYoCalifique->num_rows == 1) {
+						$miCalificacion = $consultaYoCalifique->fetch_array()["CALIFICACION"];
+					} else {
+						$miCalificacion = -1;
+					}
+
+
+
 					$consultaComentarios = $con->query("SELECT COUNT(IDCOMENTARIO) as CANTIDAD
 										FROM comentarios
 										WHERE IDPUBLICACION = '$idPublicacion' AND ESTADOCOMENTARIO = 'activo'
@@ -43,7 +63,10 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 						"IDUSUARIO" => $desafio["IDUSUARIO"],
 						"USUARIO" => $desafio["USUARIO"],
 						"TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
-						"CANTIDADCOMENTARIOS" => $cantComentarios
+						"CANTIDADCOMENTARIOS" => $cantComentarios,
+						"CANTIDADPOSITIVOS" => (int)$cantidadPositivos,
+						"CANTIDADNEGATIVOS" => (int)$cantidadNegativos,
+						"MICALIFICACION" => (int)$miCalificacion
 					);
 					$arrayDevolver[] = $temp;
 				}
