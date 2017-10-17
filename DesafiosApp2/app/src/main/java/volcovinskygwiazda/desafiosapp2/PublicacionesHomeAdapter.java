@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,6 +105,31 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
         imagenPerfilPublicacionHome = (ImageView)v.findViewById(R.id.imagenPerfilPublicacionHome);
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
+
+        View rectanguloPositivos, rectanguloNegativos;
+        rectanguloNegativos = (View) v.findViewById(R.id.rectanguloNegativos);
+        rectanguloPositivos = (View) v.findViewById(R.id.rectanguloPositivos);
+
+       // int totalCalificaciones = publicacionesList.get(position).getCalificacionesNegativas() + publicacionesList.get(position).getCalificacionesPositivas();
+
+        //float porcentajePositivas = (publicacionesList.get(position).getCalificacionesPositivas() * 100) / totalCalificaciones;
+        //float porcentajeNegativas = (publicacionesList.get(position).getCalificacionesNegativas() * 100) / totalCalificaciones;
+
+        //Log.d("Porcentaje", "Positivo: " + String.valueOf(porcentajePositivas));
+        //Log.d("Porcentaje", "Negativo: " + String.valueOf(porcentajeNegativas));
+        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)
+                rectanguloNegativos.getLayoutParams();
+        //params.weight = 1.0f;
+        params.weight = porcentajeNegativas/100;
+        rectanguloNegativos.setLayoutParams(params);
+
+        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams)
+                rectanguloPositivos.getLayoutParams();
+        //params.weight = 1.0f;
+        params.weight = porcentajePositivas/100;
+        rectanguloPositivos.setLayoutParams(params);*/
+
+
 
         btnCalificarPositivo = (ImageView)v.findViewById(R.id.btnCalificarPositivo);
         btnCalificarNegativo = (ImageView)v.findViewById(R.id.btnCalificarNegativo);
