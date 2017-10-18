@@ -21,13 +21,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.StringLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -106,28 +109,65 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
 
         TextView displayVerComentarios = (TextView)v.findViewById(R.id.displayVerComentarios);
 
+
+        TextView cantPositivos, cantNegativos;
+        cantPositivos = (TextView)v.findViewById(R.id.cantPositivos);
+        cantNegativos = (TextView)v.findViewById(R.id.cantNegativos);
+
         View rectanguloPositivos, rectanguloNegativos;
         rectanguloNegativos = (View) v.findViewById(R.id.rectanguloNegativos);
         rectanguloPositivos = (View) v.findViewById(R.id.rectanguloPositivos);
 
-       // int totalCalificaciones = publicacionesList.get(position).getCalificacionesNegativas() + publicacionesList.get(position).getCalificacionesPositivas();
+        int totalCalificaciones = publicacionesList.get(position).getCalificacionesNegativas() + publicacionesList.get(position).getCalificacionesPositivas();
+        Log.d("Calificaciones", "Total: " + totalCalificaciones);
 
-        //float porcentajePositivas = (publicacionesList.get(position).getCalificacionesPositivas() * 100) / totalCalificaciones;
-        //float porcentajeNegativas = (publicacionesList.get(position).getCalificacionesNegativas() * 100) / totalCalificaciones;
+        if(totalCalificaciones > 0)
+        {
+            float porcentajePositivas = (publicacionesList.get(position).getCalificacionesPositivas() * 100) / totalCalificaciones;
+            float porcentajeNegativas = (publicacionesList.get(position).getCalificacionesNegativas() * 100) / totalCalificaciones;
+            Log.d("Calificaciones", "Pos: " + porcentajePositivas + "    Neg: " + porcentajeNegativas);
 
-        //Log.d("Porcentaje", "Positivo: " + String.valueOf(porcentajePositivas));
-        //Log.d("Porcentaje", "Negativo: " + String.valueOf(porcentajeNegativas));
-        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)
-                rectanguloNegativos.getLayoutParams();
-        //params.weight = 1.0f;
-        params.weight = porcentajeNegativas/100;
-        rectanguloNegativos.setLayoutParams(params);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rectanguloNegativos.getLayoutParams();
+            //params.weight = 1.0f;
+            params.weight = porcentajeNegativas/100;
+            Log.d("Calificaciones", "Nuevo weight neg: " + porcentajeNegativas/100);
+            rectanguloNegativos.setLayoutParams(params);
 
-        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams)
-                rectanguloPositivos.getLayoutParams();
-        //params.weight = 1.0f;
-        params.weight = porcentajePositivas/100;
-        rectanguloPositivos.setLayoutParams(params);*/
+            LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams)
+                    rectanguloPositivos.getLayoutParams();
+            params2.weight = porcentajePositivas/100;
+            Log.d("Calificaciones", "Nuevo weight pos: " + porcentajePositivas/100);
+            rectanguloPositivos.setLayoutParams(params2);
+
+            if(publicacionesList.get(position).getCalificacionesNegativas() == 0)
+            {
+                cantNegativos.setVisibility(View.INVISIBLE);
+                cantPositivos.setText(String.valueOf(publicacionesList.get(position).getCalificacionesPositivas()));
+            }
+            else if(publicacionesList.get(position).getCalificacionesPositivas() == 0)
+            {
+                cantPositivos.setVisibility(View.INVISIBLE);
+                cantNegativos.setText(String.valueOf(publicacionesList.get(position).getCalificacionesNegativas()));
+            }
+            else
+            {
+                cantNegativos.setText(String.valueOf(publicacionesList.get(position).getCalificacionesNegativas()));
+                cantPositivos.setText(String.valueOf(publicacionesList.get(position).getCalificacionesPositivas()));
+            }
+
+
+        }
+        else
+        {
+            //Borramos los views
+            rectanguloNegativos.setVisibility(View.INVISIBLE);
+            rectanguloPositivos.setVisibility(View.INVISIBLE);
+            cantNegativos.setVisibility(View.INVISIBLE);
+            cantPositivos.setVisibility(View.INVISIBLE);
+
+        }
+
+
 
 
 

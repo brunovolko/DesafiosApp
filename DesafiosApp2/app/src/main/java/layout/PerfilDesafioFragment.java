@@ -138,7 +138,11 @@ public class PerfilDesafioFragment extends Fragment {
                             String USUARIO = jsonObject.getString("USUARIO");
                             int TIENEIMAGEN = jsonObject.getInt("TIENEIMAGEN");
                             int CANTIDADCOMENTARIOS = jsonObject.getInt("CANTIDADCOMENTARIOS");
-                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN, CANTIDADCOMENTARIOS);
+                            int CALIFICACIONESPOSITIVAS = jsonObject.getInt("CANTIDADPOSITIVOS");
+                            int CALIFICACIONESNEGATIVAS = jsonObject.getInt("CANTIDADNEGATIVOS");
+                            int MICALIFICACION = jsonObject.getInt("MICALIFICACION");
+
+                            publicacionTemp = new publicacion(IDPUBLICACION, IDUSUARIO, DESAFIO, USUARIO, TIENEIMAGEN, CANTIDADCOMENTARIOS, CALIFICACIONESPOSITIVAS, CALIFICACIONESNEGATIVAS, MICALIFICACION);
                             listaPublicaciones.add(publicacionTemp);
                             Log.d("Estado", jsonArray.get(pos).toString());
 
@@ -156,7 +160,7 @@ public class PerfilDesafioFragment extends Fragment {
 
 
 
-                        //registerForContextMenu(listViewPublicacionesHome);
+                        //registerForContextMenu(listViewPublicacionesPerfilDesafio);
 
                         /*listViewPublicacionesHome.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override

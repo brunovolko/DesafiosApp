@@ -27,17 +27,20 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtUsuario"
                 android:layout_marginTop="20dp"
                 android:hint="Usuario"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtEmail"
                 android:layout_marginTop="20dp"
                 android:inputType="textEmailAddress"
                 android:hint="Email"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtPassword"
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
                 android:hint="Contraseña"/>
@@ -45,11 +48,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:id="@+id/txtPassword2"
                 android:inputType="textPassword"
                 android:hint="Confirmar contraseña"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/btnCrearCuenta"
                 android:text="Crear cuenta"
                 android:background="#340067"
                 android:textColor="#ffffff"

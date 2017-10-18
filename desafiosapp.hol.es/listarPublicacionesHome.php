@@ -45,20 +45,6 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 				
 
 
-				/*$arrayDeComentarios = array();
-				//Traer comentarios
-				$consultaComentarios = $con->query("SELECT IDCOMENTARIO, COMENTARIO
-										FROM comentarios
-										WHERE IDPUBLICACION = '$idPublicacion' AND ESTADOCOMENTARIO = 'activo'
-										ORDER BY IDCOMENTARIO DESC");
-				while($comentario = $consultaComentarios->fetch_array()) {
-					$temp = array(
-						"IDCOMENTARIO" => (int)$comentario["IDCOMENTARIO"],
-						"COMENTARIO" => $comentario["COMENTARIO"]
-						);
-					$arrayDeComentarios[] = $temp;
-				}*/
-
 				//Cantidad de comentarios
 				$consultaComentarios = $con->query("SELECT COUNT(IDCOMENTARIO) as CANTIDAD
 										FROM comentarios
@@ -74,7 +60,6 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
 					"IDUSUARIO" => $desafio["IDUSUARIO"],
 					"USUARIO" => $desafio["USUARIO"],
 					"TIENEIMAGEN" => $desafio["TIENEIMAGEN"],
-					//"COMENTARIOS" => $arrayDeComentarios
 					"CANTIDADCOMENTARIOS" => (int)$cantComentarios,
 					"CANTIDADPOSITIVOS" => (int)$cantidadPositivos,
 					"CANTIDADNEGATIVOS" => (int)$cantidadNegativos,

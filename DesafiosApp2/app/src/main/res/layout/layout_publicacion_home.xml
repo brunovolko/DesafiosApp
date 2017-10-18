@@ -81,19 +81,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <!--<View
-                    android:layout_width="130dp"
-                    android:layout_weight=".3"
-                    android:id="@+id/rectanguloPositivos"
-                    android:background="@drawable/rectpositivo"
-                    android:layout_height="5dp"/>
-                <View
-                    android:layout_width="40dp"
-                    android:layout_weight=".3"
-                    android:id="@+id/rectanguloNegativos"
-                    android:background="@drawable/rectnegativo"
-                    android:layout_height="5dp"/>-->
                 <View
                     android:layout_width="0dp"
                     android:layout_weight=".5"
@@ -117,7 +104,8 @@
                     android:layout_height="wrap_content"
                     android:text="984"
                     android:textColor="@color/positivo"
-                    android:textSize="24dp"
+                    android:textSize="15dp"
+                    android:id="@+id/cantPositivos"
                     android:layout_marginTop="7dp"
                     android:layout_marginLeft="5dp"/>
                 <TextView
@@ -125,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="200"
                     android:textColor="@color/negativo"
+                    android:id="@+id/cantNegativos"
                     android:textSize="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="7dp"
