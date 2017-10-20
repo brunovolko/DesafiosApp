@@ -1,0 +1,168 @@
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <!-- Top nav -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textlines"
+            android:layout_alignParentTop="true"
+            android:id="@+id/topNavPerfil"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tituloUsuarioPerfil"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_opciones"
+                android:id="@+id/btnOpciones"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:textSize="16dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <!-- / Top nav -->
+
+
+
+
+        <!--<ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topNavPerfil">-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/topNavPerfil"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/topPerfil"
+                android:layout_marginTop="10dp">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight=".3"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/defaultuserperfil"
+                        android:id="@+id/imagenPerfilPublico"
+                        android:layout_marginLeft="10dp"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight=".66"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight=".5"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:id="@+id/seguidoresPerfil"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="25dp"
+                                    android:text=""/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13dp"
+                                    android:text="Seguidores"/>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:id="@+id/seguidosPerfil"
+                                    android:layout_gravity="center"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="25dp"
+                                    android:text=""/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13dp"
+                                    android:text="Seguidos"/>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-1dp"
+                android:id="@+id/tabsPerfil"
+                android:layout_below="@+id/topPerfil"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Completados"
+                    android:id="@+id/btnVerDesafiosCompletados"
+                    android:background="@drawable/textlines2"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight=".5"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Creados"
+                    android:id="@+id/btnVerDesafiosCreados"
+                    android:background="@drawable/textlines2"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight=".5"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tabsPerfil"
+                android:layout_marginBottom="50dp"
+                android:id="@+id/framePublicacionesPerfil"></FrameLayout>
+
+        </RelativeLayout>
+        <!--</ScrollView>-->
+
+
+
+    </RelativeLayout>

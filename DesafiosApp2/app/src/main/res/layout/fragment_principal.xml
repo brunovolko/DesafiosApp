@@ -59,6 +59,8 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight=".25"
+            android:id="@+id/btnMiCuenta"
+            android:onClick="changeFragment"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="wrap_content"

@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 import layout.BienvenidaFragment;
 import layout.DesafiosFragment;
 import layout.HomeFragment;
+import layout.MiCuentaFragment;
 import layout.NuevoDesafioFragment;
 import layout.PrincipalFragment;
 import okhttp3.MultipartBody;
@@ -441,6 +442,10 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragmentPrincipal, fragment);
             ft.commit();
+        }
+        else if(vista == findViewById(R.id.btnMiCuenta))
+        {
+            cambiarFragment(R.id.fragmentPrincipal, new MiCuentaFragment());
         }
     }
 
