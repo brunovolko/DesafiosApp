@@ -65,7 +65,7 @@ public class BuscadorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 actividadAnfitriona.cerrarTeclado();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                actividadAnfitriona.volverFrag();
             }
         });
         txtBuscador = (EditText)vista.findViewById(R.id.txtBuscador);
@@ -127,7 +127,8 @@ public class BuscadorFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
@@ -178,7 +179,7 @@ public class BuscadorFragment extends Fragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 actividadAnfitriona.perfilViendo = Integer.valueOf(view.getTag().toString());
-                                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment(), true);
                                 actividadAnfitriona.ref = "Buscador";
                             }
                         });

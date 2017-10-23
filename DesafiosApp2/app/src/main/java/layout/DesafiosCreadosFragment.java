@@ -76,7 +76,7 @@ public class DesafiosCreadosFragment extends Fragment {
     private void abrirPerfilDesafio(int idDesafio)
     {
         actividadAnfitriona.perfilDesafioViendo = idDesafio;
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment(), true);
     }
 
 
@@ -104,7 +104,8 @@ public class DesafiosCreadosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

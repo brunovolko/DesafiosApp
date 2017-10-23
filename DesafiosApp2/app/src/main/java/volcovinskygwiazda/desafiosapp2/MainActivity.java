@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     public int desafioCumpliendo, comentariosViendo;
     public String textoDesafioCumpliendo, ref/*refPerfil, refPerfilDesafios*/;
 
+    FragmentManager fm;
+    FragmentTransaction ft;
+
     public int perfilViendo, perfilDesafioViendo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +75,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("Estado", "3");
 
-        Fragment fragment;
-        fragment = new BienvenidaFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragmentContenedor, fragment);
-        ft.commit();
+        fm = getSupportFragmentManager();
+
+
+        cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
 
         Log.d("Estado", "2");
 
         accesoBase = new baseSQLiteHelper(getApplicationContext(),"dataBase",null,1);
         baseDatos = accesoBase.getWritableDatabase();
+
+
 
         Log.d("Estado", "3");
 
@@ -127,17 +130,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    int backStacksAgregados = 0;
 
-
-
-
-
-
-    public void cambiarFragment(int donde, Fragment frag)
+    public void vaciarStackFragments()
     {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        while(backStacksAgregados > 0)
+        {
+            volverFrag();
+        }
+
+
+    }
+
+    public void volverFrag()
+    {
+        fm.popBackStackImmediate();
+        backStacksAgregados--;
+    }
+
+
+    public void cambiarFragment(int donde, Fragment frag, boolean guardar)
+    {
+        ft = fm.beginTransaction();
         ft.replace(donde, frag);
+        if(guardar)
+        {
+            ft.addToBackStack("MiTag");
+            backStacksAgregados++;
+        }
+
         ft.commit();
     }
 
@@ -445,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(vista == findViewById(R.id.btnMiCuenta))
         {
-            cambiarFragment(R.id.fragmentPrincipal, new MiCuentaFragment());
+            cambiarFragment(R.id.fragmentPrincipal, new MiCuentaFragment(),true);
         }
     }
 

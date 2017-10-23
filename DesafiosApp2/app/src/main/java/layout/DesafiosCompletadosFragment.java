@@ -79,7 +79,8 @@ public class DesafiosCompletadosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

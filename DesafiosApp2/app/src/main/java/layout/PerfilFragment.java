@@ -95,7 +95,8 @@ public class PerfilFragment extends Fragment {
                 {
                     actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
                 }*/
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                //actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                actividadAnfitriona.volverFrag();
 
 
 
@@ -147,7 +148,7 @@ public class PerfilFragment extends Fragment {
 
         btnVerDesafiosCompletados.setShadowLayer(2, 1, 1, Color.parseColor("#000000"));
         btnVerDesafiosCreados.setShadowLayer(0, 0, 0, Color.parseColor("#000000"));
-        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCompletadosFragment());
+        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCompletadosFragment(), false);
 
     }
 
@@ -155,7 +156,7 @@ public class PerfilFragment extends Fragment {
     {
         btnVerDesafiosCreados.setShadowLayer(2, 1, 1, Color.parseColor("#000000"));
         btnVerDesafiosCompletados.setShadowLayer(0, 0, 0, Color.parseColor("#000000"));
-        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCreadosFragment());
+        actividadAnfitriona.cambiarFragment(R.id.framePublicacionesPerfil, new DesafiosCreadosFragment(), false);
     }
 
 
@@ -182,7 +183,8 @@ public class PerfilFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
@@ -307,7 +309,8 @@ public class PerfilFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

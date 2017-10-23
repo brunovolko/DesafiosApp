@@ -63,7 +63,7 @@ public class PerfilDesafioFragment extends Fragment {
         btnVolverDelPerfilDeLaLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                regresar();
+                actividadAnfitriona.volverFrag();
             }
         });
 
@@ -79,15 +79,6 @@ public class PerfilDesafioFragment extends Fragment {
         return vista;
     }
 
-    void regresar()
-    {
-        switch (actividadAnfitriona.ref)
-        {
-            case "perfil":
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
-                break;
-        }
-    }
 
 
     // Definimos AsyncTask
@@ -108,7 +99,8 @@ public class PerfilDesafioFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

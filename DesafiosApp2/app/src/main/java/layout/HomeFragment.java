@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         btnAbirBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new BuscadorFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new BuscadorFragment(), true);
             }
         });
 
@@ -105,7 +105,8 @@ public class HomeFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

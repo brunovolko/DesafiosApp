@@ -287,7 +287,7 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //Ir al perfil de este usuario
                 //La imagen debe hacer lo mismo
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment(), true);
                 actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
                 actividadAnfitriona.ref = "Home";
 
@@ -389,7 +389,7 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //Ir al perfil de este usuario
                 //La imagen debe hacer lo mismo
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment(), true);
                 actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
 
             }
@@ -407,14 +407,14 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
 
     void abrirComentarios(int idPublicacion)
     {
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment(), true);
         actividadAnfitriona.comentariosViendo = idPublicacion;
     }
 
     private void abrirPerfilDesafio(int idDesafio)
     {
         actividadAnfitriona.perfilDesafioViendo = idDesafio;
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilDesafioFragment(), true);
     }
 
     // Definimos AsyncTask
@@ -438,7 +438,8 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(),false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

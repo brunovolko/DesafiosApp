@@ -75,7 +75,7 @@ public class CumplirDesafioFragment extends Fragment {
         btnVolverADesafios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment(), true);
             }
         });
         btnEnviarPublicacion = (ImageView)vista.findViewById(R.id.btnEnviarPublicacion);
@@ -118,13 +118,14 @@ public class CumplirDesafioFragment extends Fragment {
             {
                 // El token está mal, asi que a borrarloo y que vuelva al inicio
                 Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", Toast.LENGTH_SHORT).show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
                 //ok
                 Toast.makeText(actividadAnfitriona, "Tu desafio fué creado con éxito!", Toast.LENGTH_SHORT).show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment(), true);
             }
 
 

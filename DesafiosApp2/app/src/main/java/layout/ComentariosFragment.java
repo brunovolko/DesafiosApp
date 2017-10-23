@@ -67,7 +67,7 @@ public class ComentariosFragment extends Fragment {
         btnVolverDeComentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new HomeFragment(),true);
             }
         });
 
@@ -114,7 +114,8 @@ public class ComentariosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
@@ -232,12 +233,13 @@ public class ComentariosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
                 Toast.makeText(actividadAnfitriona, "Comentario enviado con éxito!", Toast.LENGTH_SHORT).show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment(), true);
             }
 
 

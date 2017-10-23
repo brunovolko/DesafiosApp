@@ -215,7 +215,7 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
         imagenPerfilPublicacionUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment(), true);
                 actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
                 actividadAnfitriona.ref = "PerfilDesafio";
             }
@@ -224,7 +224,7 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
         displayNombreUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new PerfilFragment(), true);
                 actividadAnfitriona.perfilViendo = publicacionesList.get(position).getIdUsuario();
                 actividadAnfitriona.ref = "PerfilDesafio";
             }
@@ -408,7 +408,7 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
 
     void abrirComentarios(int idPublicacion)
     {
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment(), true);
         actividadAnfitriona.comentariosViendo = idPublicacion;
     }
 
@@ -434,7 +434,8 @@ public class PublicacionesPerfilDesafioAdapter extends BaseAdapter {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

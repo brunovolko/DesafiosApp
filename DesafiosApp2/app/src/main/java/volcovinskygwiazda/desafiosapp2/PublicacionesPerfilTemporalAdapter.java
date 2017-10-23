@@ -377,7 +377,7 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
 
     void abrirComentarios(int idPublicacion)
     {
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new ComentariosFragment(), true);
         actividadAnfitriona.comentariosViendo = idPublicacion;
     }
 
@@ -403,7 +403,8 @@ public class PublicacionesPerfilTemporalAdapter extends BaseAdapter {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {

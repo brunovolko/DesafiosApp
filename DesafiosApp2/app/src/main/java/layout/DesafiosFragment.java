@@ -135,7 +135,7 @@ public class DesafiosFragment extends Fragment {
 
     private void nuevoDesafio()
     {
-        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new NuevoDesafioFragment());
+        actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new NuevoDesafioFragment(), true);
 
     }
 
@@ -160,7 +160,8 @@ public class DesafiosFragment extends Fragment {
                 Toast miToast;
                 miToast = Toast.makeText(actividadAnfitriona, "Tu sesión expiró, vuelve a iniciar sesion.", LENGTH_SHORT);
                 miToast.show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
+                actividadAnfitriona.vaciarStackFragments();
             }
             else
             {
@@ -431,7 +432,7 @@ public class DesafiosFragment extends Fragment {
 
                 actividadAnfitriona.image = imagenComprimida;
 
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment());
+                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment(), true);
             }
             else
             {
@@ -461,7 +462,7 @@ public class DesafiosFragment extends Fragment {
                 Log.d("Estado", e.getMessage());
             }
 
-            actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment());
+            actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new CumplirDesafioFragment(), true);
 
         }
     }
