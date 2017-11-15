@@ -445,8 +445,8 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
             {
 
                 Log.d("Adapter", "Notify");
-                //actividadAnfitriona.adapterPublicaciones.notifyDataSetChanged();
-                /*//Perfectoo
+                actividadAnfitriona.adapterPublicaciones.notifyDataSetChanged();
+                //Perfectoo
                 if(calificacionIntentando == 1)
                 {
                     btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage_activo));
@@ -457,7 +457,7 @@ public class PublicacionesHomeAdapter extends BaseAdapter {
                     Log.d("Calificacion", "Negativando");
                     btnCalificarPositivo.setImageDrawable(res.getDrawable(R.drawable.positivoimage));
                     btnCalificarNegativo.setImageDrawable(res.getDrawable(R.drawable.negativoimage_activo));
-                }*/
+                }
             }
 
             calificacionIntentando = -1;

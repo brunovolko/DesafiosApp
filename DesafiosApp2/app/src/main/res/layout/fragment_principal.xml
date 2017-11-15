@@ -21,7 +21,7 @@
         android:padding="8dp">
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".333"
             android:id="@+id/btnHome"
             android:onClick="changeFragment"
             android:layout_height="wrap_content">
@@ -34,7 +34,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".333"
             android:id="@+id/btnDesafios"
             android:onClick="changeFragment"
             android:layout_height="wrap_content">
@@ -45,7 +45,7 @@
                 android:layout_centerHorizontal="true"
                 />
         </RelativeLayout>
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="0dp"
             android:layout_weight=".25"
             android:layout_height="wrap_content">
@@ -55,10 +55,10 @@
                 android:src="@drawable/notificaciones"
                 android:layout_centerHorizontal="true"
                 />
-        </RelativeLayout>
+        </RelativeLayout>-->
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight=".25"
+            android:layout_weight=".333"
             android:id="@+id/btnMiCuenta"
             android:onClick="changeFragment"
             android:layout_height="wrap_content">
