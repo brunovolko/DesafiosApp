@@ -30,13 +30,13 @@
                 android:id="@+id/txtUsuario"
                 android:layout_marginTop="20dp"
                 android:hint="Usuario"/>
-            <EditText
+            <!--<EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtEmail"
                 android:layout_marginTop="20dp"
                 android:inputType="textEmailAddress"
-                android:hint="Email"/>
+                android:hint="Email"/>-->
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

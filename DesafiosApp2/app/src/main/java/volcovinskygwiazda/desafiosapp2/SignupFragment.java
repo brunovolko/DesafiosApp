@@ -34,6 +34,8 @@ public class SignupFragment extends Fragment {
     View vista;
     MainActivity actividadAnfitriona;
     AlertDialog alert;
+    EditText txtUsuario, txtEmail, txtPassword, txtPassword2;
+    String usuario, pass;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,11 +46,11 @@ public class SignupFragment extends Fragment {
         actividadAnfitriona = (MainActivity)getActivity();
 
 
-        final EditText txtUsuario, txtEmail, txtPassword, txtPassword2;
+
         Button btnCrearCuenta;
 
         txtUsuario = (EditText)vista.findViewById(R.id.txtUsuario);
-        txtEmail = (EditText)vista.findViewById(R.id.txtEmail);
+        /*txtEmail = (EditText)vista.findViewById(R.id.txtEmail);*/
         txtPassword = (EditText)vista.findViewById(R.id.txtPassword);
         txtPassword2 = (EditText)vista.findViewById(R.id.txtPassword2);
         btnCrearCuenta = (Button)vista.findViewById(R.id.btnCrearCuenta);
@@ -57,24 +59,29 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Registrar
-                if(txtUsuario.getText().toString().trim().isEmpty() || txtEmail.getText().toString().trim().isEmpty() || txtPassword.getText().toString().trim().isEmpty() || txtPassword2.getText().toString().trim().isEmpty())
+                if(txtUsuario.getText().toString().trim().isEmpty()/* || txtEmail.getText().toString().trim().isEmpty()*/ || txtPassword.getText().toString().trim().isEmpty() || txtPassword2.getText().toString().trim().isEmpty())
                 {
                     Toast.makeText(actividadAnfitriona, "Ningun campo puede estar vacio", Toast.LENGTH_SHORT).show();
                 }
-                else if(!actividadAnfitriona.validarEmail(txtEmail.getText().toString()))
+                /*else if(!actividadAnfitriona.validarEmail(txtEmail.getText().toString()))
                 {
                     Toast.makeText(actividadAnfitriona, "Ingrese un email válido", Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 else if(!txtPassword.getText().toString().matches(txtPassword2.getText().toString()))
                 {
                     Toast.makeText(actividadAnfitriona, "Las contraseñas deben coincidir", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
+                    usuario = txtUsuario.getText().toString();
+                    pass = txtPassword.getText().toString();
+
                     //Validacion del cliente ok, registrar
                     AlertDialog.Builder builder = new AlertDialog.Builder(actividadAnfitriona).setCancelable(false);
-                    builder.setMessage("Creando desafio...");
+                    builder.setMessage("Registrando usuario...");
                     alert = builder.create();
+
+                    new registrarTask().execute();
 
 
 
@@ -88,7 +95,7 @@ public class SignupFragment extends Fragment {
 
 
     // Definimos AsyncTask
-    private class buscarDesafiosOnline extends AsyncTask<String, Void, String> {
+    private class registrarTask extends AsyncTask<String, Void, String> {
 
         protected void onPostExecute(String datos) {
             super.onPostExecute(datos);
@@ -105,11 +112,16 @@ public class SignupFragment extends Fragment {
                 actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new BienvenidaFragment(), false);
                 actividadAnfitriona.vaciarStackFragments();
             }
-            else
+            else if(datos.equals("ok"))
             {
                 //ok
-                Toast.makeText(actividadAnfitriona, "Tu desafio fué creado con éxito!", Toast.LENGTH_SHORT).show();
-                actividadAnfitriona.cambiarFragment(R.id.fragmentPrincipal, new DesafiosFragment(), true);
+                Toast.makeText(actividadAnfitriona, "Usuario registrado con éxito!", Toast.LENGTH_SHORT).show();
+                actividadAnfitriona.cambiarFragment(R.id.fragmentContenedor, new LoginFragment(), false);
+            }
+            else
+            {
+                // El token está mal, asi que a borrarloo y que vuelva al inicio
+                Toast.makeText(actividadAnfitriona, datos, Toast.LENGTH_SHORT).show();
             }
 
 
@@ -123,15 +135,14 @@ public class SignupFragment extends Fragment {
 
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("usuario", parametros[0])
-                    .addFormDataPart("email", parametros[1])
-                    .addFormDataPart("password", parametros[2])
-                    .addFormDataPart("password2", parametros[3])
+                    .addFormDataPart("usuario", usuario)
+                    /*.addFormDataPart("email", parametros[1])*/
+                    .addFormDataPart("password", pass)
                     .build();
 
 
             Request request = new Request.Builder()
-                    .url("http://proyectoinfo.hol.es/crearDesafio.php")
+                    .url("http://proyectoinfo.hol.es/registrar.php")
                     .method("POST", RequestBody.create(null, new byte[0]))
                     .post(requestBody)
                     .build();
